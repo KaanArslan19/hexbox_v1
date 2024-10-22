@@ -1,8 +1,7 @@
 import client from "@/app/utils/mongodb";
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextResponse } from "next/server";
-
-export const GET = async (req: NextApiRequest, res: NextApiResponse) => {
+import { NextRequest, NextResponse } from "next/server";
+    
+export const GET = async (req: NextRequest, res: NextResponse) => {
     try {
         const mdbClient = client;
         const db = mdbClient.db("hexbox_main");
