@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-
+import logo from "../../../public/hexbox_black_logo.svg";
 import { Bars3Icon, HeartIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { MobileNav } from "../MobileNav";
-import ProfileMenu from "../ProfileMenu";
 import SearchForm from "../SearchForm";
 import {
   InfoMenuItems,
@@ -13,8 +12,8 @@ import {
   NavItems,
 } from "@/app/utils/menuItems";
 import InfoMenu from "../InfoMenu";
-import CustomButton from "../ui/CustomButton";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
+import Wallet from "../Wallet";
 interface Props {
   cartItemsCount: number;
   avatar?: string;
@@ -56,7 +55,7 @@ export default function NavUI() {
               href="/"
               className="mr-2 cursor-pointer py-1.5 lg:ml-2 font-semibold "
             >
-              LOGO
+              <Image src={logo} alt="hexbox_logo" width={50} height={50} />{" "}
             </Link>
             <div className="lg:flex justify-between gap-4 items-center ml-8 hidden lg:visible">
               {NavItems.map(({ href, label }) => {
@@ -80,9 +79,8 @@ export default function NavUI() {
             </div>
           </div>
           <div className="hidden lg:flex gap-2 items-center">
-            <ProfileMenu menuItems={subMenuItems} avatar={""} />
             <Link className="  px-4 py-1 " href="/">
-              <ConnectButton />
+              <Wallet />{" "}
             </Link>
           </div>
 
