@@ -13,11 +13,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
         }
 
         console.log(req.nextUrl.searchParams);
-        if (!req.nextUrl.searchParams.has("campaign")) {
+        if (!req.nextUrl.searchParams.has("campaignId")) {
             return NextResponse.json({ error: "Campaign ID is required" }, { status: 400 });
         }
 
-        const campaignId = req.nextUrl.searchParams.get("campaign");
+        const campaignId = req.nextUrl.searchParams.get("campaignId");
         if (!ObjectId.isValid(campaignId as string)) {
             return NextResponse.json({ error: "Campaign ID is invalid" }, { status: 400 });
         }
