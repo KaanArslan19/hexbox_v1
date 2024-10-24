@@ -7,9 +7,10 @@ import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
 import { mainnet, polygon, optimism, arbitrum, base } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
 const config = getDefaultConfig({
   appName: "hexbox",
-  projectId: process.env.RAINBOWKIT_PROJECT_ID!,
+  projectId: process.env.NEXT_PUBLIC_RAINBOWKIT_PROJECT_ID!,
   chains: [mainnet, polygon, optimism, arbitrum, base],
   ssr: true,
 });
