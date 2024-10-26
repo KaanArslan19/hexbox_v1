@@ -12,7 +12,7 @@ export interface MenuItem {
   hasDropdown?: boolean;
 }
 
-export interface ProjectListProps {
+export interface CampaignListProps {
   listings: {
     _id: string;
     user_id: string;
