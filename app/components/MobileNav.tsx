@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MenuItem } from "../types";
 import CustomButton from "./ui/CustomButton";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Wallet from "./Wallet";
 
 interface Props {
   open: boolean;
@@ -25,7 +26,9 @@ export function MobileNav({ open, menuItems }: Props) {
             </li>
           ))}
         </ul>
-        <CustomButton className="w-full mt-4">Connect</CustomButton>
+        <div className=" mt-2 text-center">
+          <Wallet />
+        </div>
       </Collapse>
     </>
   );

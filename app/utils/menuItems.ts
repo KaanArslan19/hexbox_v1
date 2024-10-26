@@ -28,8 +28,8 @@ export const MobileMenuItems: MenuItem[] = [
     label: "Explore",
   },
   {
-    href: "/contact",
-    label: "Contact",
+    href: "/create",
+    label: "Create",
   },
   {
     href: "/about",

@@ -2,8 +2,8 @@
 import Link from "next/link";
 import React from "react";
 import logo from "../../../public/hexbox_black_logo.svg";
-import { Bars3Icon, HeartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { UserCircleIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+
 import { MobileNav } from "../MobileNav";
 import SearchForm from "../SearchForm";
 import {
@@ -18,24 +18,6 @@ interface Props {
   cartItemsCount: number;
   avatar?: string;
 }
-
-export const subMenuItems = [
-  {
-    href: "/profile",
-    icon: <UserCircleIcon className="h-4 w-4" />,
-    label: "My Profile",
-  },
-  {
-    href: "/profile/orders",
-    icon: <ShoppingBagIcon className="h-4 w-4" />,
-    label: "Orders",
-  },
-  {
-    href: "/profile/wishlist",
-    icon: <HeartIcon className="h-4 w-4" />,
-    label: "Wishlist",
-  },
-];
 
 export default function NavUI() {
   const [open, setOpen] = React.useState(false);
@@ -55,7 +37,7 @@ export default function NavUI() {
               href="/"
               className="mr-2 cursor-pointer py-1.5 lg:ml-2 font-semibold "
             >
-              <Image src={logo} alt="hexbox_logo" width={50} height={50} />{" "}
+              <Image src={logo} alt="hexbox_logo" width={50} height={50} />
             </Link>
             <div className="lg:flex justify-between gap-4 items-center ml-8 hidden lg:visible">
               {NavItems.map(({ href, label }) => {
@@ -80,7 +62,7 @@ export default function NavUI() {
           </div>
           <div className="hidden lg:flex gap-2 items-center">
             <Link className="  px-4 py-1 " href="/">
-              <Wallet />{" "}
+              <Wallet />
             </Link>
           </div>
 
