@@ -16,11 +16,11 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
 }) => {
   return (
     <li className=" bg-none flex flex-col justify-between items-center shadow-sm hover:shadow-xl rounded-md overflow-hidden shadow-lightBlueColor transition-shadow duration-150 m-[10px] border-2 border-lightBlueColor">
-      <Link className="contents" href={`/category/${title}/${id}`}>
+      <Link className="contents" href={`/campaign?campaignId=${id}`}>
         <Image
-          className="h-[170px] w-full object-cover hover:scale-105 transition-transform duration-200 ease-in"
+          className="h-[170px] w-full object-cover object-center "
           loading="lazy"
-          src={logo}
+          src={`${process.env.R2_BUCKET_URL}/campaign_logos/` + logo}
           alt={title}
           width={100}
           height={70}
@@ -39,7 +39,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
               <SiSolana className="h-5 w-5 text-blueColor" />
               <span className="text-xl">{fundAmount}</span>
             </div>
-            <span className="text-gray-500 text-sm">{userId}</span>
+            <span className="text-lightBlueColor text-lg">{status}</span>
           </div>
         </div>
       </Link>

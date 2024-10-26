@@ -37,3 +37,13 @@ export interface ProjectItemProps {
   hexboxAddress: string;
   status: boolean;
 }
+
+export interface NewProjectInfo {
+  title: string;
+  description: string;
+  fundAmount: number;
+  logo: File;
+  hexboxAddress: string;
+  /*   backgroundImage: File;
+   */
+}
