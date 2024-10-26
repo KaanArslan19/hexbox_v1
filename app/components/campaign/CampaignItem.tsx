@@ -1,10 +1,10 @@
 "use client";
 
-import { ProjectItemProps } from "@/app/types";
+import { CampaignItemProps } from "@/app/types";
 import Image from "next/image";
 import Link from "next/link";
 import { SiSolana } from "react-icons/si";
-const ProjectItem: React.FC<ProjectItemProps> = ({
+const ProjectItem: React.FC<CampaignItemProps> = ({
   id,
   userId,
   title,

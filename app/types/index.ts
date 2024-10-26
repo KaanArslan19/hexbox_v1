@@ -26,7 +26,7 @@ export interface CampaignListProps {
   }[];
 }
 
-export interface ProjectItemProps {
+export interface CampaignItemProps {
   id: string;
   userId: string;
   title: string;
@@ -38,7 +38,7 @@ export interface ProjectItemProps {
   status: boolean;
 }
 
-export interface NewProjectInfo {
+export interface NewCampaignInfo {
   title: string;
   description: string;
   fundAmount: number;

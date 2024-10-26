@@ -4,7 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Steps } from "antd";
 import ImageSelector from "./ui/ImageSelector";
-import { NewProjectInfo } from "../types";
+import { NewCampaignInfo } from "../types";
 
 const steps = [
   { title: "Project Info" },
@@ -51,7 +51,7 @@ const initialValues = {
 };
 
 interface Props {
-  onSubmit(values: NewProjectInfo): void;
+  onSubmit(values: NewCampaignInfo): void;
   onImageRemove?(source: string): void;
 }
 
@@ -62,7 +62,7 @@ export default function CampaignForm(props: Props) {
   const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
 
   const handleSubmit = (values: typeof initialValues) => {
-    const projectData: NewProjectInfo = {
+    const projectData: NewCampaignInfo = {
       title: values.title,
       description: values.description,
       fundAmount: Number(values.fundAmount),

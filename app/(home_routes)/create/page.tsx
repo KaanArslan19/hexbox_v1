@@ -1,14 +1,14 @@
 "use client";
 
 import CampaignForm from "@/app/components/CampaignForm";
-import { NewProjectInfo } from "@/app/types";
+import { NewCampaignInfo } from "@/app/types";
 import { useRouter } from "next/navigation"; // Use `next/navigation` for the new app router
 import React from "react";
 
 export default function CreateProject() {
   const router = useRouter();
 
-  const handleCreateProject = async (values: NewProjectInfo) => {
+  const handleCreateProject = async (values: NewCampaignInfo) => {
     try {
       const formData = new FormData();
       formData.append("title", values.title);
