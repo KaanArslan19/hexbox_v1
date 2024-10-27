@@ -14,10 +14,6 @@ import {
 import InfoMenu from "../InfoMenu";
 import Image from "next/image";
 import Wallet from "../Wallet";
-interface Props {
-  cartItemsCount: number;
-  avatar?: string;
-}
 
 export default function NavUI() {
   const [open, setOpen] = React.useState(false);
@@ -47,7 +43,7 @@ export default function NavUI() {
                     href={href}
                     className="outline-none text-black hover:text-blueColor"
                   >
-                    <span>{label}</span>
+                    <span className="text-xl">{label}</span>
                   </Link>
                 );
               })}

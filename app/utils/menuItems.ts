@@ -24,7 +24,7 @@ export const InfoMenuItems: MenuItem[] = [
 ];
 export const MobileMenuItems: MenuItem[] = [
   {
-    href: "/projects",
+    href: "/campaigns",
     label: "Explore",
   },
   {
@@ -55,11 +55,11 @@ export const MobileMenuItems: MenuItem[] = [
 
 export const NavItems: MenuItem[] = [
   {
-    href: "/projects",
+    href: "/campaigns",
     label: "Explore",
   },
   {
-    href: "/contact",
-    label: "Contact",
+    href: "/create",
+    label: "Create",
   },
 ];

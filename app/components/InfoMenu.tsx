@@ -22,7 +22,7 @@ export default function InfoMenu({ menuItems }: Props) {
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
         <button className="flex hover:text-blueColor items-center gap-1 py-0.5 pr-2 pl-0.5 lg:ml-auto">
-          <p className="px-4 py-2">Info</p>
+          <span className="mr-2 text-xl">Info</span>
 
           <ChevronDownIcon
             strokeWidth={2.5}

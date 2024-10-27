@@ -20,7 +20,11 @@ export default function SearchForm({ submitTo }: Props) {
       className="w-full md:w-72"
     >
       <Input
-        label="Search"
+        placeholder="search"
+        className="!border !border-gray-300 bg-white text-gray-900 shadow-lg shadow-gray-900/5 ring-4 ring-transparent placeholder:text-gray-500 placeholder:opacity-100 focus:!border-blueColor  "
+        labelProps={{
+          className: "hidden",
+        }}
         icon={
           <button>
             <MagnifyingGlassIcon className="h-5 w-5" />
