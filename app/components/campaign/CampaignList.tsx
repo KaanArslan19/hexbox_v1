@@ -5,7 +5,7 @@ import { CampaignListProps } from "@/app/types";
 const CampaignList: React.FC<CampaignListProps> = ({ listings }) => {
   return (
     <Fragment>
-      <div className="flex flex-col items-center my-8">
+      <div className="flex flex-col items-center my-8  mx-auto">
         <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
           {listings.map((item) => (
             <ProjectItem

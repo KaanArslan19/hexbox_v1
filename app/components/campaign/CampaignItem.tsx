@@ -27,7 +27,7 @@ const ProjectItem: React.FC<CampaignItemProps> = ({
         />
 
         <div className="w-full p-6 shadow-lightBlueColor">
-          <p className="m-0 text-2xl font-bold truncate">{title}</p>
+          <h4 className="m-0 text-2xl font-bold truncate">{title}</h4>
 
           <div className="flex items-center justify-between mt-4 text-lg font-semibold">
             <span>Total</span>
