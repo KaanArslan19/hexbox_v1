@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/utils/auth"
 import { uploadImageToR2 } from "@/app/utils/imageUpload";
 import { ObjectId } from "mongodb";
+import { getCampaign } from "@/app/api/getCampaign/route";
 
 export const PUT = async (req: NextRequest, res: NextResponse) => {
 
@@ -18,7 +19,6 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
         if (!formData) {
             return NextResponse.json({ error: "Campaign data is required" }, { status: 400 });
         }
-        const newCampaignDetails: any = {}
 
         if (!req.nextUrl.searchParams.get('campaignId')) {
             return NextResponse.json({ error: "Campaign ID is required" }, { status: 400 });
@@ -28,23 +28,34 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
             return NextResponse.json({ error: "Invalid campaign ID" }, { status: 400 });
         }
 
+        const campaign = await getCampaign(campaignId as string);
+        if (!campaign) {
+            return NextResponse.json({ error: "Campaign not found" }, { status: 404 });
+        } 
+
+        const campaignDetails = campaign[0];
+
         if (formData.get('title')) {
-            newCampaignDetails.title = formData.get('title')
+            if (formData.get('title') !== campaignDetails.title) {
+                campaignDetails.title = formData.get('title')
+            }
         }
         if (formData.get('description')) {
-            newCampaignDetails.description = formData.get('description')
+            if (formData.get('description') !== campaignDetails.description) {
+                campaignDetails.description = formData.get('description')
+            }
         }
         if (formData.get('logo')) {
             const logoFileName = await uploadImageToR2(formData.get('logo') as File)
-            newCampaignDetails.logo = logoFileName
+            campaignDetails.logo = logoFileName
         }
 
-        console.log(formData)
+        console.log(campaignDetails)
 
         const mdbClient = client;
         const db = mdbClient.db("hexbox_main");
         const campaignIdObj = new ObjectId(campaignId as string)
-        const result = await db.collection("campaigns").updateOne({ _id: campaignIdObj}, { $set: newCampaignDetails });
+        const result = await db.collection("campaigns").updateOne({ _id: campaignIdObj}, { $set: campaignDetails });
 
         return NextResponse.json({ message: "Campaign updated successfully" }, { status: 200 });    
     } catch (error) {
