@@ -3,25 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/utils/auth"
+import { getCampaign } from "@/app/utils/getCampaign";
 
-export async function getCampaign(campaignId: string) {
-    try {
-        if (!ObjectId.isValid(campaignId)) {
-            console.error("Invalid campaign ID");
-            return null;
-        }
-        const mdbClient = client;
-        const db = mdbClient.db("hexbox_main");
-        const campaign = await db
-            .collection("campaigns")
-            .find({ _id: new ObjectId(campaignId) })
-            .toArray();
-        return campaign;
-    } catch (e) {
-        console.error(e);
-        return null;
-    }
-}
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
     try {

@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/utils/auth"
 import { uploadImageToR2 } from "@/app/utils/imageUpload";
 import { ObjectId } from "mongodb";
-import { getCampaign } from "@/app/api/getCampaign/route";
+import { getCampaign } from "@/app/utils/getCampaign";
+
 
 export const PUT = async (req: NextRequest, res: NextResponse) => {
 
