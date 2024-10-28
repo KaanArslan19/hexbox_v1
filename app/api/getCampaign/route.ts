@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/utils/auth"
 import { getCampaign } from "@/app/utils/getCampaign";
 
+// Add this export to mark the route as dynamic
+export const dynamic = 'force-dynamic';
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
     try {
