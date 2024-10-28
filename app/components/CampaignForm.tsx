@@ -57,11 +57,13 @@ interface Props {
 
 export default function CampaignForm(props: Props) {
   const { onSubmit, onImageRemove } = props;
+  const [isPending, setIsPending] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [logo, setLogo] = useState<File | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
 
-  const handleSubmit = (values: typeof initialValues) => {
+  const handleSubmit = async (values: typeof initialValues) => {
+    setIsPending(true);
     const projectData: NewCampaignInfo = {
       title: values.title,
       description: values.description,
@@ -70,7 +72,11 @@ export default function CampaignForm(props: Props) {
       /*       backgroundImage: values.backgroundImage!,
        */ hexboxAddress: values.hexboxAddress,
     };
-    onSubmit(projectData);
+    try {
+      await onSubmit(projectData);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
@@ -249,9 +255,12 @@ export default function CampaignForm(props: Props) {
               <button
                 type="submit"
                 className="px-4 py-2 bg-blueColor text-white rounded"
-                onClick={() => submitForm()}
+                onClick={() => {
+                  if (!isPending) submitForm();
+                }}
+                disabled={isPending}
               >
-                Submit
+                {isPending ? "Submitting..." : "Submit"}
               </button>
             ) : (
               <button
