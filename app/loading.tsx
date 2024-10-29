@@ -7,7 +7,7 @@ export default function Loading() {
   return (
     <div className="max-w-screen-xl mx-auto xl:p-0 p-4">
       <div className=" space-y-6 animate-pulse">
-        <div className="lg:h-[380px] md:h-[300px] h-[250px] bg-gray-300"></div>
+        <div className="mt-2 h-[80px] bg-gray-300"></div>
         <GridView>
           {dummyData.map((_, index) => {
             return (

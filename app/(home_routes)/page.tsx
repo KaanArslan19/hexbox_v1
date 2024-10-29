@@ -1,5 +1,5 @@
 import CampaignList from "../components/campaign/CampaignList";
-import { fetchCampaigns } from "../utils/api";
+import { fetchCampaigns } from "../utils/apiHelpers";
 
 export default async function Home() {
   const campaigns = await fetchCampaigns();

@@ -2,7 +2,7 @@ import CampaignList from "@/app/components/campaign/CampaignList";
 import React from "react";
 import CustomButton from "@/app/components/ui/CustomButton";
 import Link from "next/link";
-import { fetchCampaigns } from "@/app/utils/api";
+import { fetchCampaigns } from "@/app/utils/apiHelpers";
 
 export default async function CampaignsPage() {
   const campaigns = await fetchCampaigns();
