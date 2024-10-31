@@ -33,6 +33,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       title: campaignEntries.title,
       description: campaignEntries.description,
       fund_amount: Number(campaignEntries.fund_amount),
+      hexboxAddress: campaignEntries.hexboxAddress,
       logo: logoFileName,
       timestamp: Date.now(),
       status: true,

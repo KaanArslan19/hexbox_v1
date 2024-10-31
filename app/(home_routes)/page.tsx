@@ -1,4 +1,5 @@
 import CampaignList from "../components/campaign/CampaignList";
+import CreateWallet from "../components/CreateWallet";
 import { fetchCampaigns } from "../utils/apiHelpers";
 
 export default async function Home() {

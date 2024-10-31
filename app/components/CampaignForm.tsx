@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Steps } from "antd";
 import ImageSelector from "./ui/ImageSelector";
 import { NewCampaignInfo } from "../types";
+import CreateWallet from "./CreateWallet";
 
 const steps = [
   { title: "Project Info" },
@@ -60,6 +61,7 @@ export default function CampaignForm(props: Props) {
   const [isPending, setIsPending] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [logo, setLogo] = useState<File | null>(null);
+  const [walletInfo, setWalletInfo] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
 
   const handleSubmit = async (values: typeof initialValues) => {
@@ -70,7 +72,8 @@ export default function CampaignForm(props: Props) {
       fundAmount: Number(values.fundAmount),
       logo: values.logo!,
       /*       backgroundImage: values.backgroundImage!,
-       */ hexboxAddress: values.hexboxAddress,
+       */ 
+      hexboxAddress: values.hexboxAddress,
     };
     try {
       await onSubmit(projectData);
@@ -213,12 +216,17 @@ export default function CampaignForm(props: Props) {
                 before launching your campaign.
               </p>
               <h3 className="text-xl mb-2">Hexbox Wallet Address</h3>
-              <Field
+              <CreateWallet onWalletInfo={(walletInfo) => {
+                setWalletInfo(JSON.stringify(walletInfo));
+                setFieldValue("hexboxAddress", JSON.stringify(walletInfo));
+                console.log(walletInfo);
+              }} />
+              {/* <Field
                 name="hexboxAddress"
                 type="text"
                 placeholder="Hexbox Address"
                 className="block w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blueColor"
-              />
+              /> */}
               <ErrorMessage
                 name="hexboxAddress"
                 component="div"

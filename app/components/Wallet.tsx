@@ -9,7 +9,11 @@ import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 
 require('@solana/wallet-adapter-react-ui/styles.css');
 
-const Wallet = () => {
+const Wallet = ({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) => {
 
     const network: WalletAdapterNetwork = WalletAdapterNetwork.Devnet;
     const endpoint: string = clusterApiUrl(network);
@@ -20,7 +24,7 @@ const Wallet = () => {
         <WalletProvider wallets={wallets} autoConnect>
             <WalletModalProvider>
                 <SessionProvider>
-                    <SignInButton />
+                    {children}
                 </SessionProvider>
             </WalletModalProvider>
         </WalletProvider>

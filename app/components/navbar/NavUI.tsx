@@ -14,6 +14,7 @@ import {
 import InfoMenu from "../InfoMenu";
 import Image from "next/image";
 import Wallet from "../Wallet";
+import SignInButton from "../SignInButton";
 
 export default function NavUI() {
   const [open, setOpen] = React.useState(false);
@@ -58,7 +59,7 @@ export default function NavUI() {
           </div>
           <div className="hidden lg:flex gap-2 items-center">
             <Link className="  px-4 py-1 " href="/">
-              <Wallet />
+              <SignInButton />
             </Link>
           </div>
 

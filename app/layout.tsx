@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import AuthSession from "./components/AuthSession";
+import Wallet from "./components/Wallet";
 
 export const metadata: Metadata = {
   title: "Hexbox",
@@ -15,9 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <AuthSession>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
+      <Wallet>
+        <html lang="en">
+          <body>{children}</body>
+        </html>
+      </Wallet>
     </AuthSession>
   );
 }
