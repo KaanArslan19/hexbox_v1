@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MenuItem } from "../types";
 
 import Wallet from "./Wallet";
+import SignInButton from "./SignInButton";
 
 interface Props {
   open: boolean;
@@ -27,7 +28,7 @@ export function MobileNav({ open, menuItems }: Props) {
         </ul>
         <div className=" mt-2 text-center ">
           <Link className="  px-4 py-1 " href="/">
-            <Wallet />
+              <SignInButton />
           </Link>
         </div>
       </Collapse>
