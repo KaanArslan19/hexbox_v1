@@ -1,9 +1,7 @@
 "use client";
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { SessionProvider } from 'next-auth/react';
 import React, { useEffect, useMemo } from 'react';
 import { clusterApiUrl } from '@solana/web3.js';
-import SignInButton from './SignInButton';
 import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
 
@@ -23,9 +21,7 @@ const Wallet = ({
     <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect>
             <WalletModalProvider>
-                <SessionProvider>
-                    {children}
-                </SessionProvider>
+                {children}  
             </WalletModalProvider>
         </WalletProvider>
     </ConnectionProvider>

@@ -69,14 +69,14 @@ export default function ProfileMenu({ menuItems, avatar }: Props) {
           </MenuItem>
         </Link>
 
-        <MenuItem>
+        {/* <MenuItem>
           <SignOutButton>
             <p className="flex items-center gap-2 rounded">
               <PowerIcon className="h-4 w-4" />
               <span>Sign Out</span>
             </p>
           </SignOutButton>
-        </MenuItem>
+        </MenuItem> */}
       </MenuList>
     </Menu>
   );

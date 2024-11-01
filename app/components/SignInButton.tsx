@@ -1,14 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import {
   useSession,
   signIn,
   signOut,
-  SignInResponse,
   getCsrfToken,
 } from "next-auth/react";
 import dynamic from "next/dynamic";
-import { useWallet, WalletContextState } from "@solana/wallet-adapter-react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import {
   SolanaSignInInput,
   SolanaSignInOutput,
@@ -23,33 +22,23 @@ const WalletMultiButtonDynamic = dynamic(
   { ssr: false }
 );
 
+// Singleton to track global auth state
+const globalAuthState = {
+  isProcessing: false,
+  lastConnected: null as boolean | null,
+  lastStatus: null as string | null,
+};
+
 const SignInButton = () => {
   const { status } = useSession();
-  const wallet: WalletContextState = useWallet();
+  const wallet = useWallet();
 
-  const signInWallet = async (jsonInput: string, jsonOutput: string) => {
-    try {
-      let result: SignInResponse | undefined = await signIn("credentials", {
-        output: jsonOutput,
-        input: jsonInput,
-        redirect: false,
-      });
-
-      if (result?.ok != true) {
-        throw new Error("Failed to sign in");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleSignIn = async () => {
+  const handleSignIn = useCallback(async () => {
     if (!wallet.signIn) {
-      console.warn("Wallet not supported!");
+      console.warn("Wallet doesn't support signIn");
       return;
     }
 
-    // Creation of SignInInput to be passed to wallet.signIn
     const input: SolanaSignInInput = {
       domain: window.location.host,
       address: wallet.publicKey?.toBase58() || "",
@@ -57,37 +46,49 @@ const SignInButton = () => {
       nonce: await getCsrfToken(),
     };
 
-    // Actual signature by the user through the wallet
     const output: SolanaSignInOutput = await wallet.signIn(input);
+    const { jsonInput, jsonOutput } = serializeData(input, output);
 
-    // Serialisation of the input and output data
-    const { jsonInput, jsonOutput }: { jsonInput: string; jsonOutput: string } =
-      serializeData(input, output);
-
-    // Signing in the user with NextAuth.js signIn()
-    await signInWallet(jsonInput, jsonOutput);
-  };
-
-  // Simple handler for NextAuth.js signOut()
-  const handleSignOut = async () => {
-    const result = await signOut({
+    const result = await signIn("credentials", {
+      output: jsonOutput,
+      input: jsonInput,
       redirect: false,
     });
-  };
+
+    if (result?.ok !== true) {
+      console.error("Failed to sign in");
+    }
+  }, [wallet]);
 
   useEffect(() => {
-    if (wallet.connected === false && status === "authenticated") {
-      handleSignOut();
-    } else if (wallet.connected === true && status === "unauthenticated") {
-      handleSignIn();
+    // Skip if already processing or no state change
+    if (globalAuthState.isProcessing || 
+        (globalAuthState.lastConnected === wallet.connected && 
+         globalAuthState.lastStatus === status)) {
+      return;
     }
-  }, [wallet.connected]);
 
-  return (
-    <>
-      <WalletMultiButtonDynamic />
-    </>
-  );
+    const handleAuth = async () => {
+      try {
+        globalAuthState.isProcessing = true;
+        console.log("Processing auth:", { connected: wallet.connected, status });
+
+        if (wallet.connected === false && status === "authenticated") {
+          await signOut({ redirect: false });
+        } else if (wallet.connected === true && status === "unauthenticated") {
+          await handleSignIn();
+        }
+      } finally {
+        globalAuthState.lastConnected = wallet.connected;
+        globalAuthState.lastStatus = status;
+        globalAuthState.isProcessing = false;
+      }
+    };
+
+    handleAuth();
+  }, [wallet.connected, status, handleSignIn]);
+
+  return <WalletMultiButtonDynamic />;
 };
 
 export default SignInButton;

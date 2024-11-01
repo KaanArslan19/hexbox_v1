@@ -58,9 +58,7 @@ export default function NavUI() {
             </div>
           </div>
           <div className="hidden lg:flex gap-2 items-center">
-            <Link className="  px-4 py-1 " href="/">
-              <SignInButton />
-            </Link>
+            <SignInButton />
           </div>
 
           <div className="lg:hidden flex items-center space-x-2 ">
