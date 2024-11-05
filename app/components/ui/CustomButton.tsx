@@ -9,6 +9,7 @@ interface ButtonProps {
   borderColor?: string;
   className?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FC<ButtonProps> = ({
@@ -19,10 +20,12 @@ const CustomButton: React.FC<ButtonProps> = ({
   borderColor = "border-blueColor",
   className = "",
   onClick,
+  disabled = false,
 }) => {
   return (
     <button
-      className={`px-4 py-2 rounded-md border-[1px] color ${bgColor} ${hoverBgColor} ${borderColor} ${textColor} ${className} transition-all duration-300`}
+      disabled={disabled}
+      className={`px-4 py-2 rounded-md border-[1px] color ${bgColor} ${hoverBgColor} ${borderColor} ${textColor} ${className} transition-all duration-300 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
       onClick={onClick}
     >
       {children}

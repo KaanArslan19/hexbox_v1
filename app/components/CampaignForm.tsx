@@ -34,7 +34,8 @@ const validationSchema = [
   Yup.object({
     fundAmount: Yup.number()
       .typeError("Fund amount must be a number")
-      .required("Fund amount is required"),
+      .required("Fund amount is required")
+      .min(0.0000001, "Fund amount must be greater than 0"),
   }),
   Yup.object({
     hexboxAddress: Yup.string().required("Hexbox address is required"),
@@ -77,7 +78,8 @@ export default function CampaignForm(props: Props) {
     };
     try {
       await onSubmit(projectData);
-    } finally {
+    } catch (error) {
+      console.error(error);
       setIsPending(false);
     }
   };
@@ -173,11 +175,11 @@ export default function CampaignForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <ErrorMessage
+              {/* <ErrorMessage
                 name="backgroundImage"
                 component="div"
                 className="text-red-500 mb-2"
-              />
+              /> */}
             </div>
           )}
 
@@ -197,6 +199,7 @@ export default function CampaignForm(props: Props) {
                 type="text"
                 placeholder="Fund Amount"
                 className="block w-full p-2 border border-gray-300 focus:border-blueColor rounded mb-4 focus:outline-none"
+                min="0"
               />
               <ErrorMessage
                 name="fundAmount"
@@ -216,17 +219,19 @@ export default function CampaignForm(props: Props) {
                 before launching your campaign.
               </p>
               <h3 className="text-xl mb-2">Hexbox Wallet Address</h3>
-              <CreateWallet onWalletInfo={(walletInfo) => {
-                setWalletInfo(JSON.stringify(walletInfo));
-                setFieldValue("hexboxAddress", JSON.stringify(walletInfo));
-                console.log(walletInfo);
-              }} />
-              {/* <Field
-                name="hexboxAddress"
-                type="text"
-                placeholder="Hexbox Address"
-                className="block w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blueColor"
-              /> */}
+              <CreateWallet
+                disabled={!!walletInfo}
+                onWalletInfo={(walletInfo) => {
+                  setWalletInfo(JSON.stringify(walletInfo));
+                  setFieldValue("hexboxAddress", JSON.stringify(walletInfo));
+                  console.log(walletInfo);
+                }}
+              />
+              {walletInfo && (
+                <p className="text-md mb-8 font-thin text-green-500">
+                  Wallet created successfully. Proceed to the next step.
+                </p>
+              )}
               <ErrorMessage
                 name="hexboxAddress"
                 component="div"
