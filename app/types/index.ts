@@ -47,3 +47,9 @@ export interface NewCampaignInfo {
   /*   backgroundImage: File;
    */
 }
+
+export interface AboutData {
+  image: string;
+  header: string;
+  description: string;
+}
