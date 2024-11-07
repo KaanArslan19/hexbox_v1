@@ -5,7 +5,7 @@ import Link from "next/link";
 import { fetchCampaigns } from "@/app/utils/apiHelpers";
 
 export default async function CampaignsPage() {
-  const campaigns = await fetchCampaigns();
+  const campaigns = await fetchCampaigns(10, 0);
 
   return (
     <div className="mx-auto max-w-2xl lg:max-w-6xl">

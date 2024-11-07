@@ -4,7 +4,7 @@ import { CampaignItemProps } from "@/app/types";
 import Image from "next/image";
 import Link from "next/link";
 import { SiSolana } from "react-icons/si";
-const ProjectItem: React.FC<CampaignItemProps> = ({
+const CampaignItem: React.FC<CampaignItemProps> = ({
   id,
   userId,
   title,
@@ -47,4 +47,4 @@ const ProjectItem: React.FC<CampaignItemProps> = ({
   );
 };
 
-export default ProjectItem;
+export default CampaignItem;
