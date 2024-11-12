@@ -25,6 +25,11 @@ export interface CampaignListProps {
     status: boolean;
   }[];
 }
+enum Status {
+  Active = "Active",
+  Inactive = "Inactive",
+  Completed = "Completed",
+}
 
 export interface CampaignItemProps {
   id: string;
@@ -35,12 +40,21 @@ export interface CampaignItemProps {
   logo: string;
   backgroundImage: string;
   hexboxAddress: string;
-  status: boolean;
+  status?: Status;
 }
-
+interface SocialLinks {
+  discord?: string;
+  telegram: string;
+  website?: string;
+  linkedIn?: string;
+}
 export interface NewCampaignInfo {
   title: string;
   description: string;
+  oneLiner?: string;
+  location?: string;
+  deadline?: string;
+  social_links?: SocialLinks;
   fundAmount: number;
   logo: File;
   // hexboxAddress: string;
