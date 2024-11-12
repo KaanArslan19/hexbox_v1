@@ -10,7 +10,7 @@ import CreateWallet from "./CreateWallet";
 const steps = [
   { title: "Project Info" },
   { title: "Details" },
-  { title: "Payment Info" },
+  // { title: "Payment Info" },
   { title: "Review" },
 ];
 const FILE_SIZE_LIMIT = 1024 * 1024; // 1MB in bytes
@@ -36,20 +36,25 @@ const validationSchema = [
       .typeError("Fund amount must be a number")
       .required("Fund amount is required")
       .min(0.0000001, "Fund amount must be greater than 0"),
+    totalSupply: Yup.number()
+      .typeError("Total supply must be a number")
+      .required("Total supply is required")
+      .min(1, "Total supply must be greater than 1"),
   }),
-  Yup.object({
-    hexboxAddress: Yup.string().required("Hexbox address is required"),
-  }),
+  // Yup.object({
+  //   hexboxAddress: Yup.string().required("Hexbox address is required"),
+  // }),
 ];
 
 const initialValues = {
   title: "",
   description: "",
   fundAmount: "",
-  hexboxAddress: "",
+  //hexboxAddress: "",
   logo: null,
   /*   backgroundImage: null,
    */
+  totalSupply: 0,
 };
 
 interface Props {
@@ -70,11 +75,12 @@ export default function CampaignForm(props: Props) {
     const projectData: NewCampaignInfo = {
       title: values.title,
       description: values.description,
-      fundAmount: Number(values.fundAmount),
+      fundAmount: Number(values.fundAmount),  
       logo: values.logo!,
       /*       backgroundImage: values.backgroundImage!,
        */ 
-      hexboxAddress: values.hexboxAddress,
+      // hexboxAddress: values.hexboxAddress,
+      totalSupply: 0,
     };
     try {
       await onSubmit(projectData);
@@ -206,9 +212,19 @@ export default function CampaignForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
+
+              <h3 className="text-xl mb-2">Total token supply</h3>
+              <Field
+                name="totalSupply"
+                type="text"
+                placeholder="Total Supply"
+                className="block w-full p-2 border border-gray-300 focus:border-blueColor rounded mb-4 focus:outline-none"
+                min="1"
+              />
             </div>
           )}
-
+          
+          {/*
           {currentStep === 2 && (
             <div>
               <h2 className="text-2xl mb-2">Payment Info</h2>
@@ -239,8 +255,9 @@ export default function CampaignForm(props: Props) {
               />
             </div>
           )}
+          */}
 
-          {currentStep === 3 && (
+          {currentStep === 2 && (
             <div>
               <h2 className="text-2xl mb-2">Review</h2>
               <p className="text-md mb-8 font-thin">

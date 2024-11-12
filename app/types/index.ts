@@ -43,9 +43,10 @@ export interface NewCampaignInfo {
   description: string;
   fundAmount: number;
   logo: File;
-  hexboxAddress: string;
+  // hexboxAddress: string;
   /*   backgroundImage: File;
    */
+  totalSupply: number;
 }
 
 export interface AboutData {

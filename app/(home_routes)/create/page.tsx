@@ -34,7 +34,8 @@ export default function CreateProject() {
       formData.append("description", values.description);
       formData.append("fund_amount", values.fundAmount.toString());
       formData.append("logo", values.logo);
-      formData.append("hexboxAddress", values.hexboxAddress);
+      //formData.append("hexboxAddress", values.hexboxAddress);
+      formData.append("totalSupply", values.totalSupply.toString());
 
       const response = await fetch("/api/createCampaign", {
         method: "POST",
