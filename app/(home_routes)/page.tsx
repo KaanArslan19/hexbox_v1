@@ -20,10 +20,7 @@ export default async function Home() {
             Fund Your Campaigns
           </h1>
           <p className="mx-auto text-lg lg:text-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-            dolorem nobis quibusdam deserunt temporibus neque, quo et delectus
-            ullam quos, iste recusandae distinctio repellat! At labore excepturi
-            est saepe laudantium.
+            Fund your campaigns easliy. Fudn campaigns.
           </p>
         </div>
         <CampaignList listings={campaigns} />
