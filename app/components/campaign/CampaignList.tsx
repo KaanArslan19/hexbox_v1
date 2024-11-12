@@ -45,7 +45,8 @@ const CampaignList: React.FC<CampaignListProps> = ({ listings }) => {
               logo={item.logo}
               backgroundImage={item.background_image}
               hexboxAddress={item.hexbox_address}
-              status={item.status}
+              /*               status={item.status}
+               */
             />
           ))}
         </ul>

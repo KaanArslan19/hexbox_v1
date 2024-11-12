@@ -27,11 +27,16 @@ const fileSizeValidator = Yup.mixed().test(
 const validationSchema = [
   Yup.object({
     title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
+    oneLiner: Yup.string().required("One Liner is required"),
     logo: fileSizeValidator.required("Logo is required"),
     /*     backgroundImage: fileSizeValidator.required("Background image is required"), */
   }),
   Yup.object({
+    description: Yup.string().required("Description is required"),
+    location: Yup.string().required("Location is required"),
+    deadline: Yup.date()
+      .required("Project Deadline date is required")
+      .min(new Date(), "Deadline must be in the future"),
     fundAmount: Yup.number()
       .typeError("Fund amount must be a number")
       .required("Fund amount is required")
@@ -78,9 +83,14 @@ export default function CampaignForm(props: Props) {
       fundAmount: Number(values.fundAmount),  
       logo: values.logo!,
       /*       backgroundImage: values.backgroundImage!,
+<<<<<<< Updated upstream
        */ 
       // hexboxAddress: values.hexboxAddress,
       totalSupply: 0,
+=======
+       */
+      hexboxAddress: values.hexboxAddress,
+>>>>>>> Stashed changes
     };
     try {
       await onSubmit(projectData);
@@ -139,16 +149,14 @@ export default function CampaignForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <h3 className="text-xl mb-2">Projects Description</h3>
-
+              <h3 className="text-xl mb-2">Projects One Liner</h3>
               <Field
-                as="textarea"
-                name="description"
-                placeholder="Description"
-                className="block w-full p-2 border border-gray-300 rounded h-32 mb-8 focus:outline-none focus:border-blueColor"
+                name="oneLiner"
+                placeholder="One Liner"
+                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
-                name="description"
+                name="oneLiner"
                 component="div"
                 className="text-red-500 mb-2"
               />
@@ -198,6 +206,42 @@ export default function CampaignForm(props: Props) {
                 objectives. Ensure the amount accurately reflects the resources
                 needed to bring your project to life.
               </p>
+              <h3 className="text-xl mb-2">Projects Description</h3>
+              <Field
+                as="textarea"
+                name="description"
+                placeholder="Description"
+                className="block w-full p-2 border border-gray-300 rounded h-32 mb-8 focus:outline-none focus:border-blueColor"
+              />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className="text-red-500 mb-2"
+              />
+              <h3 className="text-xl mb-2">Projects Location</h3>
+              <Field
+                name="location"
+                placeholder="Location"
+                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+              />
+              <ErrorMessage
+                name="location"
+                component="div"
+                className="text-red-500 mb-2"
+              />
+              <h3 className="text-xl mb-2">Projects Deadline</h3>
+
+              <Field
+                name="deadline"
+                type="date"
+                placeholder="Deadline"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
+              />
+              <ErrorMessage
+                name="deadline"
+                component="div"
+                className="text-red-500 mb-2"
+              />
               <h3 className="text-xl mb-2">Fund Amount</h3>
 
               <Field

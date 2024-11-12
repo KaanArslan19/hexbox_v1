@@ -5,19 +5,19 @@ import { AboutData } from "../types";
 export default function About() {
   const ABOUT_DATA: AboutData[] = [
     {
-      image: "../../../hexbox_name_logo_black.svg",
+      image: "/hexbox_name_logo_black.png",
       header: "First Step",
       description:
         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus,pariatur magnam tempore veniam dolores incidunt recusandae voluptatem.",
     },
     {
-      image: "../../../hexbox_name_logo_black.svg",
+      image: "/hexbox_name_logo_black.png",
       header: "Second Step",
       description:
         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus,pariatur magnam tempore veniam dolores incidunt recusandae voluptatem.",
     },
     {
-      image: "../../../hexbox_name_logo_black.svg",
+      image: "/hexbox_name_logo_black.png",
       header: "Third Step",
       description:
         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus,pariatur magnam tempore veniam dolores incidunt recusandae voluptatem.",
