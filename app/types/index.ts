@@ -68,3 +68,14 @@ export interface AboutData {
   header: string;
   description: string;
 }
+
+export interface WaitListCampaignInfo {
+  name: string;
+  surname: string;
+  mail: string;
+  description: string;
+  location: string;
+  social_links?: SocialLinks;
+  predictedFundAmount: number;
+  solanaWalletAddress: string;
+}

@@ -14,7 +14,7 @@ export const InfoMenuItems: MenuItem[] = [
     label: "Join Our Discord",
   },
   {
-    href: "/docs",
+    href: "https://hexbox.gitbook.io/hexbox/",
     label: "Docs",
   },
   {
@@ -44,7 +44,7 @@ export const MobileMenuItems: MenuItem[] = [
     label: "Join Our Discord",
   },
   {
-    href: "/docs",
+    href: "https://hexbox.gitbook.io/hexbox/",
     label: "Docs",
   },
   {
@@ -61,5 +61,28 @@ export const NavItems: MenuItem[] = [
   {
     href: "/create",
     label: "Create",
+  },
+];
+export const WaitListNavItems: MenuItem[] = [
+  {
+    href: "/https://hexbox.gitbook.io/hexbox/",
+    label: "Docs",
+  },
+  {
+    href: "https://discord.gg/7XudEQ56",
+    label: "Discord",
+  },
+
+  {
+    href: "https://x.com/hexboxmoney",
+    label: "X",
+  },
+  {
+    href: "/about",
+    label: "About",
+  },
+  {
+    href: "/faq",
+    label: "F.A.Q.",
   },
 ];

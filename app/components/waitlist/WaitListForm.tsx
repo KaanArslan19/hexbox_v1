@@ -3,14 +3,11 @@ import React, { useState } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Steps } from "antd";
-import ImageSelector from "./ui/ImageSelector";
-import { NewCampaignInfo } from "../types";
-import CreateWallet from "./CreateWallet";
+import { WaitListCampaignInfo } from "@/app/types";
 
 const steps = [
-  { title: "Project Info" },
-  { title: "Details" },
-  // { title: "Payment Info" },
+  { title: "Personal Info" },
+  { title: "Campaign Details" },
   { title: "Review" },
 ];
 const FILE_SIZE_LIMIT = 1024 * 1024; // 1MB in bytes
@@ -26,25 +23,18 @@ const fileSizeValidator = Yup.mixed().test(
 );
 const validationSchema = [
   Yup.object({
-    title: Yup.string().required("Title is required"),
-    oneLiner: Yup.string().required("One Liner is required"),
-    logo: fileSizeValidator.required("Logo is required"),
-    /*     backgroundImage: fileSizeValidator.required("Background image is required"), */
+    name: Yup.string().required("Name is required"),
+    surname: Yup.string().required("Surname is required"),
+    mail: Yup.string().required("E-mail address is required"),
   }),
   Yup.object({
     description: Yup.string().required("Description is required"),
     location: Yup.string().required("Location is required"),
-    deadline: Yup.date()
-      .required("Project Deadline date is required")
-      .min(new Date(), "Deadline must be in the future"),
-    fundAmount: Yup.number()
+    predictedFundAmount: Yup.number()
       .typeError("Fund amount must be a number")
       .required("Fund amount is required")
       .min(0.0000001, "Fund amount must be greater than 0"),
-    totalSupply: Yup.number()
-      .typeError("Total supply must be a number")
-      .required("Total supply is required")
-      .min(1, "Total supply must be greater than 1"),
+    solanaWalletAddress: Yup.string().required("Wallet address is required"),
   }),
   // Yup.object({
   //   hexboxAddress: Yup.string().required("Hexbox address is required"),
@@ -52,22 +42,27 @@ const validationSchema = [
 ];
 
 const initialValues = {
-  title: "",
+  name: "",
+  username: "",
+  mail: "",
   description: "",
-  fundAmount: "",
-  //hexboxAddress: "",
-  logo: null,
-  /*   backgroundImage: null,
-   */
-  totalSupply: 0,
+  location: "",
+  socialLinks: {
+    discord: "",
+    telegram: "",
+    website: "",
+    linkedIn: "",
+  },
+  predictedFundAmount: 0,
+  solanaWalletAddress: "",
 };
 
 interface Props {
-  onSubmit(values: NewCampaignInfo): void;
+  onSubmit(values: WaitListCampaignInfo): void;
   onImageRemove?(source: string): void;
 }
 
-export default function CampaignForm(props: Props) {
+export default function WaitListForm(props: Props) {
   const { onSubmit, onImageRemove } = props;
   const [isPending, setIsPending] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -77,15 +72,15 @@ export default function CampaignForm(props: Props) {
 
   const handleSubmit = async (values: typeof initialValues) => {
     setIsPending(true);
-    const projectData: NewCampaignInfo = {
-      title: values.title,
+    const projectData: WaitListCampaignInfo = {
+      name: values.name,
+      surname: values.username,
+      mail: values.mail,
       description: values.description,
-      fundAmount: Number(values.fundAmount),
-      logo: values.logo!,
-      /*       backgroundImage: values.backgroundImage!,
-       */
-      // hexboxAddress: values.hexboxAddress,
-      totalSupply: 0,
+      location: values.location,
+      social_links: values.socialLinks,
+      predictedFundAmount: values.predictedFundAmount,
+      solanaWalletAddress: values.solanaWalletAddress,
     };
     try {
       await onSubmit(projectData);
@@ -106,7 +101,10 @@ export default function CampaignForm(props: Props) {
           onSubmit={(e) => e.preventDefault()}
           className="p-6 max-w-2xl mx-auto"
         >
-          <h1 className="text-3xl text-center mb-4">Create Your Campaign</h1>
+          <h1 className="text-3xl text-center mb-4 ">Join Waitlist</h1>{" "}
+          <p className="text-md mb-8 font-thin text-center">
+            Fill out this form to join waitlist.
+          </p>
           <div className="mb-6">
             <Steps
               progressDot
@@ -123,85 +121,60 @@ export default function CampaignForm(props: Props) {
               }))}
             />
           </div>
-
           {currentStep === 0 && (
             <div>
-              <h2 className="text-2xl mb-2">Project Info</h2>
+              <h2 className="text-2xl mb-2">Personal Info</h2>
               <p className="text-md mb-8 font-thin">
                 Enter your project`s details. Only the sections marked as
                 optional can be changed after deployment; all other information
                 will be fixed once submitted.
               </p>
-              <h3 className="text-xl mb-2">Projects Title</h3>
+              <h3 className="text-xl mb-2">Name</h3>
               <Field
-                name="title"
+                name="name"
                 type="text"
-                placeholder="Title"
+                placeholder="Name"
                 className="block w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none  focus:border-blueColor"
               />
               <ErrorMessage
-                name="title"
+                name="name"
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <h3 className="text-xl mb-2">Projects One Liner</h3>
+              <h3 className="text-xl mb-2">Surname</h3>
               <Field
-                name="oneLiner"
-                placeholder="One Liner"
+                name="surname"
+                placeholder="Surname"
                 className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
-                name="oneLiner"
+                name="surname"
                 component="div"
                 className="text-red-500 mb-2"
               />
-
-              <h3 className="text-xl mb-2">Logo</h3>
-              <ImageSelector
-                id="thumb"
-                images={logo ? [URL.createObjectURL(logo)] : []}
-                onChange={({ target }) => {
-                  const file = target.files ? target.files[0] : null;
-                  setFieldValue("logo", file);
-                  setLogo(target.files ? target.files[0] : null);
-                }}
+              <h3 className="text-xl mb-2">Mail</h3>
+              <Field
+                name="mail"
+                placeholder="Mail"
+                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
               />
-
-              {/*   <h3>Background Image</h3>
-              <ImageSelector
-                id="backgroundImage"
-                images={
-                  backgroundImage ? [URL.createObjectURL(backgroundImage)] : []
-                }
-                onChange={({ target }) => {
-                  const file = target.files ? target.files[0] : null;
-                  setFieldValue("backgroundImage", file);
-                  setBackgroundImage(target.files ? target.files[0] : null);
-                }}
-              /> */}
               <ErrorMessage
-                name="logo"
+                name="mail"
                 component="div"
                 className="text-red-500 mb-2"
               />
-              {/* <ErrorMessage
-                name="backgroundImage"
-                component="div"
-                className="text-red-500 mb-2"
-              /> */}
             </div>
           )}
-
           {currentStep === 1 && (
             <div>
-              <h2 className="text-2xl mb-2">Details</h2>
+              <h2 className="text-2xl mb-2">Project Details</h2>
               <p className="text-md mb-8 font-thin">
                 Enter the desired fund amount for your campaign. This is the
                 total funding goal you`d like to reach to support your project`s
                 objectives. Ensure the amount accurately reflects the resources
                 needed to bring your project to life.
               </p>
-              <h3 className="text-xl mb-2">Projects Description</h3>
+              <h3 className="text-xl mb-2">Project`s Description</h3>
               <Field
                 as="textarea"
                 name="description"
@@ -213,7 +186,7 @@ export default function CampaignForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <h3 className="text-xl mb-2">Projects Location</h3>
+              <h3 className="text-xl mb-2">Project`s Location</h3>
               <Field
                 name="location"
                 placeholder="Location"
@@ -224,45 +197,44 @@ export default function CampaignForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <h3 className="text-xl mb-2">Projects Deadline</h3>
+
+              <h3 className="text-xl mb-2">Social Links</h3>
+              <Field
+                name="social_links"
+                placeholder="Social Links"
+                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+              />
+
+              <h3 className="text-xl mb-2">Predicted Fund Amount</h3>
 
               <Field
-                name="deadline"
-                type="date"
-                placeholder="Deadline"
-                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
-              />
-              <ErrorMessage
-                name="deadline"
-                component="div"
-                className="text-red-500 mb-2"
-              />
-              <h3 className="text-xl mb-2">Fund Amount</h3>
-
-              <Field
-                name="fundAmount"
+                name="predictedFundAmount"
                 type="text"
-                placeholder="Fund Amount"
+                placeholder="Predicted Fund Amount"
                 className="block w-full p-2 border border-gray-300 focus:border-blueColor rounded mb-4 focus:outline-none"
                 min="0"
               />
               <ErrorMessage
-                name="fundAmount"
+                name="predictedFundAmount"
                 component="div"
                 className="text-red-500 mb-2"
               />
 
-              <h3 className="text-xl mb-2">Total token supply</h3>
+              <h3 className="text-xl mb-2">Solana Wallet Address</h3>
               <Field
-                name="totalSupply"
+                name="solanaWalletAddress"
                 type="text"
                 placeholder="Total Supply"
                 className="block w-full p-2 border border-gray-300 focus:border-blueColor rounded mb-4 focus:outline-none"
                 min="1"
               />
+              <ErrorMessage
+                name="solanaWalletAddress"
+                component="div"
+                className="text-red-500 mb-2"
+              />
             </div>
           )}
-
           {/*
           {currentStep === 2 && (
             <div>
@@ -295,7 +267,6 @@ export default function CampaignForm(props: Props) {
             </div>
           )}
           */}
-
           {currentStep === 2 && (
             <div>
               <h2 className="text-2xl mb-2">Review</h2>
@@ -307,7 +278,6 @@ export default function CampaignForm(props: Props) {
               </p>
             </div>
           )}
-
           <div className="flex justify-between mt-6">
             <button
               type="button"

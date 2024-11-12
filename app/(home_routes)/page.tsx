@@ -1,13 +1,19 @@
+import { useRouter } from "next/navigation";
 import About from "../components/About";
 import CampaignList from "../components/campaign/CampaignList";
 import CreateWallet from "../components/CreateWallet";
+import InteractiveHexagonBanner from "../components/ui/InteractiveHexagonBanner";
+import WaitListForm from "../components/waitlist/WaitListForm";
+import { WaitListCampaignInfo } from "../types";
 import { fetchCampaigns } from "../utils/apiHelpers";
+import WaitListBanner from "../components/waitlist/WaitListBanner";
 
 export default async function Home() {
   const campaigns = await fetchCampaigns(10, 0);
+
   return (
     <main className="py-4 space-y-4">
-      <About />
+      {/*       <About />
       <div className="max-w-2xl lg:max-w-6xl mx-auto ">
         <div className="text-center mt-16   ">
           <h1 className="text-4xl lg:text-4xl font-customFont_bold mb-4 tracking-tight  ">
@@ -21,7 +27,8 @@ export default async function Home() {
           </p>
         </div>
         <CampaignList listings={campaigns} />
-      </div>
+      </div> */}
+      <WaitListBanner />
     </main>
   );
 }
