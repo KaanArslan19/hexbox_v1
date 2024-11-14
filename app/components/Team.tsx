@@ -17,13 +17,13 @@ const TeamDetails: TeamMember[] = [
   },
   {
     name: "Barkın",
-    image: "/team/barkin.jpeg",
+    image: "/team/barkin.webp",
     twitter: "https://x.com/brknckkc",
     linkedIn: "https://www.linkedin.com/in/barkin/",
   },
   {
     name: "Brad",
-    image: "/team/brad.jpeg",
+    image: "/team/brad.webp",
     twitter: "https://x.com/bradheubel",
     linkedIn: "https://www.linkedin.com/in/bradley-heubel/",
   },
