@@ -38,6 +38,30 @@ module.exports = withMT({
         customFont_light: ['"customFont_light"', "sans-serif"],
         customFont_bold: ['"customFont_bold"', "sans-serif"],
       },
+      animation: {
+        gradient: "gradient 8s ease infinite",
+        "float-1": "float1 3s ease-in-out infinite",
+        "float-2": "float2 3.5s ease-in-out infinite",
+        "float-3": "float3 4s ease-in-out infinite",
+      },
+      keyframes: {
+        gradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        float1: {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "50%": { transform: "translate(-10px, -10px) rotate(180deg)" },
+        },
+        float2: {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "50%": { transform: "translate(10px, -15px) rotate(-180deg)" },
+        },
+        float3: {
+          "0%, 100%": { transform: "translate(0, 0) rotate(0deg)" },
+          "50%": { transform: "translate(-15px, -20px) rotate(180deg)" },
+        },
+      },
     },
   },
   plugins: [],

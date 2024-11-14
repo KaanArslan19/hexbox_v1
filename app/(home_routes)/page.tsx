@@ -12,7 +12,7 @@ export default async function Home() {
   const campaigns = await fetchCampaigns(10, 0);
 
   return (
-    <main className="py-4 space-y-4">
+    <main className="py-4 ">
       {/*       <About />
       <div className="max-w-2xl lg:max-w-6xl mx-auto ">
         <div className="text-center mt-16   ">
@@ -25,7 +25,9 @@ export default async function Home() {
         </div>
         <CampaignList listings={campaigns} />
       </div> */}
-      <WaitListBanner />
+      <div className="h-[80vh] flex justify-center items-center">
+        <WaitListBanner />
+      </div>
     </main>
   );
 }

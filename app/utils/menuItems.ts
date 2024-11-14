@@ -65,7 +65,7 @@ export const NavItems: MenuItem[] = [
 ];
 export const WaitListNavItems: MenuItem[] = [
   {
-    href: "/https://hexbox.gitbook.io/hexbox/",
+    href: "https://hexbox.gitbook.io/hexbox/",
     label: "Docs",
   },
   {
