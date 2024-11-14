@@ -1,10 +1,6 @@
-import { useRouter } from "next/navigation";
-import About from "../components/About";
 import CampaignList from "../components/campaign/CampaignList";
 import CreateWallet from "../components/CreateWallet";
-import InteractiveHexagonBanner from "../components/ui/InteractiveHexagonBanner";
-import WaitListForm from "../components/waitlist/WaitListForm";
-import { WaitListCampaignInfo } from "../types";
+
 import { fetchCampaigns } from "../utils/apiHelpers";
 import WaitListBanner from "../components/waitlist/WaitListBanner";
 
