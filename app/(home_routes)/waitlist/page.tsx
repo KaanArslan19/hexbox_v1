@@ -7,7 +7,10 @@ import React from "react";
 export default function WaitListPage() {
   const router = useRouter();
 
-  const handleCreateWaitListCampaign = async (values: WaitListCampaignInfo) => {
+  const handleCreateWaitListCampaign = async (
+    token: string,
+    values: WaitListCampaignInfo
+  ) => {
     try {
       const formData = new FormData();
       formData.append("name", values.name);
@@ -16,25 +19,35 @@ export default function WaitListPage() {
 
       formData.append("description", values.description);
       formData.append("location", values.location);
-      //add the socialLinks as array
-
-      const response = await fetch("/api/createCampaign", {
+      if (values.discord) formData.append("discord", values.discord);
+      if (values.telegram) formData.append("telegram", values.telegram);
+      if (values.linkedIn) formData.append("linkedIn", values.linkedIn);
+      if (values.website) formData.append("website", values.website);
+      formData.append("predictedFundAmount", values.predictedFundAmount.toString());
+      formData.append("solanaWalletAddress", values.solanaWalletAddress);
+      formData.append("cf-turnstile-response", token);
+      
+      const response = await fetch("/api/joinWaitlist", {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create campaign");
+        throw new Error("Failed to join waitlist");
       }
-      router.push("/campaigns");
+      router.push("/");
     } catch (error) {
-      console.error("Error creating campaign:", error);
+      console.error("Error joining waitlist:", error);
     }
   };
 
   return (
     <div className="mt-10 xl:mt-20">
-      <WaitListForm onSubmit={handleCreateWaitListCampaign} />
+      <WaitListForm 
+        onSubmit={(token: string, values: WaitListCampaignInfo) => 
+          handleCreateWaitListCampaign(token, values)
+        } 
+      />
     </div>
   );
 }

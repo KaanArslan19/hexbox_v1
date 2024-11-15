@@ -4,6 +4,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Steps } from "antd";
 import { WaitListCampaignInfo } from "@/app/types";
+import { Turnstile } from "next-turnstile";
 
 const steps = [
   { title: "Personal Info" },
@@ -55,10 +56,11 @@ const initialValues = {
   linkedIn: "",
   predictedFundAmount: 0,
   solanaWalletAddress: "",
+  "cf-turnstile-response": "",
 };
 
 interface Props {
-  onSubmit(values: WaitListCampaignInfo): void;
+  onSubmit(token: string, values: WaitListCampaignInfo): void;
   onImageRemove?(source: string): void;
 }
 
@@ -69,6 +71,10 @@ export default function WaitListForm(props: Props) {
   const [logo, setLogo] = useState<File | null>(null);
   const [walletInfo, setWalletInfo] = useState<string | null>(null);
   const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
+  const [turnstileStatus, setTurnstileStatus] = useState<
+    "success" | "error" | "expired" | "required"
+  >("required");
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
 
   const handleSubmit = async (values: typeof initialValues) => {
     setIsPending(true);
@@ -88,7 +94,11 @@ export default function WaitListForm(props: Props) {
     };
     try {
       console.log(values);
-      await onSubmit(projectData);
+      if (turnstileStatus !== "success") {
+        return;
+      }
+      const token = values["cf-turnstile-response"];
+      await onSubmit(token, projectData);
     } catch (error) {
       console.error(error);
       setIsPending(false);
@@ -223,7 +233,7 @@ export default function WaitListForm(props: Props) {
                 className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
               />
 
-              <h3 className="text-xl mb-2">Predicted Fund Amount</h3>
+              <h3 className="text-xl mb-2">Predicted Fund Amount ($)</h3>
 
               <Field
                 name="predictedFundAmount"
@@ -262,6 +272,31 @@ export default function WaitListForm(props: Props) {
                 cannot be changed. Ensure accuracy before completing your
                 submission.
               </p>
+              <Turnstile
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string}
+                retry="auto"
+                refreshExpired="auto"
+                sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
+                onError={() => {
+                  setTurnstileStatus("error");
+                  setTurnstileError("Security check failed. Please try again.");
+                }}
+                onExpire={() => {
+                  setTurnstileStatus("expired");
+                  setTurnstileError(
+                    "Security check expired. Please verify again."
+                  );
+                }}
+                onLoad={() => {
+                  setTurnstileStatus("required");
+                  setTurnstileError(null);
+                }}
+                onVerify={(token) => {
+                  setFieldValue("cf-turnstile-response", token);
+                  setTurnstileStatus("success");
+                  setTurnstileError(null);
+                }}
+              />
             </div>
           )}
           <div className="flex justify-between mt-6">
