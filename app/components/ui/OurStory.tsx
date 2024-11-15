@@ -22,10 +22,10 @@ const OurStory = () => {
   return (
     <div className="max-w-6xl mx-auto px-4">
       <div className="flex flex-col lg:flex-row lg:justify-center lg:items-center gap-8">
-        <div className="w-1/5 mx-auto lg:w-1/5 flex items-center justify-center">
+        <div className="w-1/3 mx-auto lg:w-1/4 flex items-center justify-center">
           <div className="relative w-full aspect-square lg:bottom-5">
             <Image
-              src="/hexbox_red_logo.svg"
+              src="/images/about/our_story.png"
               fill
               className="object-contain"
               alt="about-logo"
@@ -37,7 +37,7 @@ const OurStory = () => {
           <h2 className="text-4xl xl:text-6xl font-light mb-8 text-center tracking-tight">
             Our Story
           </h2>
-          <div className="relative h-[400px] lg:h-[300px] w-full overflow-hidden">
+          <div className="relative h-[500px] md:h-[400px] lg:h-[300px] w-full overflow-hidden">
             <div className="relative h-full">
               {storyContent.map((content, index) => (
                 <div
@@ -51,7 +51,7 @@ const OurStory = () => {
                         : "opacity-0 translate-x-full"
                     }`}
                 >
-                  <p className="text-lg lg:text-xl leading-relaxed ">
+                  <p className="text-lg lg:text-xl leading-relaxed  ">
                     {content.text}
                   </p>
                 </div>

@@ -8,13 +8,15 @@ export default function Loading() {
     <div className="max-w-screen-xl mx-auto xl:p-0 p-4">
       <div className=" space-y-6 animate-pulse">
         <div className="mt-2 h-[80px] bg-gray-300"></div>
-        <GridView>
-          {dummyData.map((_, index) => {
+        {/*   <GridView>
+               {dummyData.map((_, index) => {
             return (
               <div key={index} className="w-full aspect-square bg-gray-300" />
             );
-          })}
-        </GridView>
+          })} 
+
+        </GridView>*/}
+        <div className="w-full h-[400px] bg-gray-300" />
       </div>
     </div>
   );

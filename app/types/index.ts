@@ -42,19 +42,17 @@ export interface CampaignItemProps {
   hexboxAddress: string;
   status?: Status;
 }
-interface SocialLinks {
-  discord?: string;
-  telegram: string;
-  website?: string;
-  linkedIn?: string;
-}
+
 export interface NewCampaignInfo {
   title: string;
   description: string;
   oneLiner?: string;
   location?: string;
   deadline?: string;
-  social_links?: SocialLinks;
+  discord?: string;
+  telegram?: string;
+  website?: string;
+  linkedIn?: string;
   fundAmount: number;
   logo: File;
   // hexboxAddress: string;
@@ -75,7 +73,10 @@ export interface WaitListCampaignInfo {
   mail: string;
   description: string;
   location: string;
-  social_links?: SocialLinks;
+  discord?: string;
+  telegram?: string;
+  website?: string;
+  linkedIn?: string;
   predictedFundAmount: number;
   solanaWalletAddress: string;
 }

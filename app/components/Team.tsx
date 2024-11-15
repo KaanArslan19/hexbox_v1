@@ -10,20 +10,20 @@ interface TeamMember {
 
 const TeamDetails: TeamMember[] = [
   {
-    name: "Kaan",
-    image: "/team/kaan.webp",
+    name: "Kaan Arslan",
+    image: "/images/team/kaan.webp",
     twitter: "https://x.com/kaanarslan999",
     linkedIn: "https://www.linkedin.com/in/kaan-arslan-eeeng/",
   },
   {
-    name: "Barkın",
-    image: "/team/barkin.webp",
+    name: "Barkın Çıkıkçı",
+    image: "/images/team/barkin.webp",
     twitter: "https://x.com/brknckkc",
     linkedIn: "https://www.linkedin.com/in/barkin/",
   },
   {
-    name: "Brad",
-    image: "/team/brad.webp",
+    name: "Bradley Heubel",
+    image: "/images/team/brad.webp",
     twitter: "https://x.com/bradheubel",
     linkedIn: "https://www.linkedin.com/in/bradley-heubel/",
   },

@@ -34,7 +34,7 @@ export default function WaitListPage() {
 
   return (
     <div className="mt-10 xl:mt-20">
-      <WaitListForm onSubmit={handleCreateWaitListCampaign} />;
+      <WaitListForm onSubmit={handleCreateWaitListCampaign} />
     </div>
   );
 }

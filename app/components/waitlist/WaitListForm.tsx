@@ -25,7 +25,9 @@ const validationSchema = [
   Yup.object({
     name: Yup.string().required("Name is required"),
     surname: Yup.string().required("Surname is required"),
-    mail: Yup.string().required("E-mail address is required"),
+    mail: Yup.string()
+      .email("Invalid email format")
+      .required("E-mail address is required"),
   }),
   Yup.object({
     description: Yup.string().required("Description is required"),
@@ -43,16 +45,14 @@ const validationSchema = [
 
 const initialValues = {
   name: "",
-  username: "",
+  surname: "",
   mail: "",
   description: "",
   location: "",
-  socialLinks: {
-    discord: "",
-    telegram: "",
-    website: "",
-    linkedIn: "",
-  },
+  discord: "",
+  telegram: "",
+  website: "",
+  linkedIn: "",
   predictedFundAmount: 0,
   solanaWalletAddress: "",
 };
@@ -74,15 +74,20 @@ export default function WaitListForm(props: Props) {
     setIsPending(true);
     const projectData: WaitListCampaignInfo = {
       name: values.name,
-      surname: values.username,
+      surname: values.surname,
       mail: values.mail,
       description: values.description,
       location: values.location,
-      social_links: values.socialLinks,
+
+      discord: values.discord,
+      telegram: values.telegram,
+      linkedIn: values.linkedIn,
+      website: values.website,
       predictedFundAmount: values.predictedFundAmount,
       solanaWalletAddress: values.solanaWalletAddress,
     };
     try {
+      console.log(values);
       await onSubmit(projectData);
     } catch (error) {
       console.error(error);
@@ -197,11 +202,24 @@ export default function WaitListForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
+              <div className="flex  items-center mb-2 ">
+                <h3 className="text-xl mr-2">Social Links</h3>
+                <p>(optional)</p>
+              </div>
 
-              <h3 className="text-xl mb-2">Social Links</h3>
               <Field
-                name="social_links"
-                placeholder="Social Links"
+                name="discord"
+                placeholder="Discord Address"
+                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+              />
+              <Field
+                name="telegram"
+                placeholder="Telegram Address"
+                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+              />
+              <Field
+                name="linkedIn"
+                placeholder="LinkedIn Address"
                 className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
               />
 
@@ -224,7 +242,7 @@ export default function WaitListForm(props: Props) {
               <Field
                 name="solanaWalletAddress"
                 type="text"
-                placeholder="Total Supply"
+                placeholder="Solana Wallet Address"
                 className="block w-full p-2 border border-gray-300 focus:border-blueColor rounded mb-4 focus:outline-none"
                 min="1"
               />
@@ -235,38 +253,6 @@ export default function WaitListForm(props: Props) {
               />
             </div>
           )}
-          {/*
-          {currentStep === 2 && (
-            <div>
-              <h2 className="text-2xl mb-2">Payment Info</h2>
-              <p className="text-md mb-8 font-thin">
-                Create a Hexbox wallet to receive funding for your campaign.
-                This wallet will securely store the funds raised and enable you
-                to manage and withdraw contributions. Make sure to set it up
-                before launching your campaign.
-              </p>
-              <h3 className="text-xl mb-2">Hexbox Wallet Address</h3>
-              <CreateWallet
-                disabled={!!walletInfo}
-                onWalletInfo={(walletInfo) => {
-                  setWalletInfo(JSON.stringify(walletInfo));
-                  setFieldValue("hexboxAddress", JSON.stringify(walletInfo));
-                  console.log(walletInfo);
-                }}
-              />
-              {walletInfo && (
-                <p className="text-md mb-8 font-thin text-green-500">
-                  Wallet created successfully. Proceed to the next step.
-                </p>
-              )}
-              <ErrorMessage
-                name="hexboxAddress"
-                component="div"
-                className="text-red-500 mb-2"
-              />
-            </div>
-          )}
-          */}
           {currentStep === 2 && (
             <div>
               <h2 className="text-2xl mb-2">Review</h2>

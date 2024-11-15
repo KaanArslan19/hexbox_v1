@@ -49,10 +49,8 @@ const WaitListBanner = () => {
     let progressInterval: NodeJS.Timeout | null = null;
 
     if (isHovered) {
-      // Reset progress when hover starts
       setProgress(0);
 
-      // Start progress animation
       let currentProgress = 0;
       progressInterval = setInterval(() => {
         currentProgress += 1;
@@ -61,9 +59,8 @@ const WaitListBanner = () => {
         } else {
           if (progressInterval) clearInterval(progressInterval);
         }
-      }, 20); // 2000ms (2s) total duration: 20ms * 100 steps
+      }, 20);
 
-      // Sequentially show logos
       [0, 1, 2, 3].forEach((index) => {
         const showTimeout = setTimeout(() => {
           setActiveLogos((prev) => [...prev, index]);
@@ -71,7 +68,6 @@ const WaitListBanner = () => {
         timeouts.push(showTimeout);
       });
 
-      // Remove logos after animation
       const cleanupTimeout = setTimeout(() => {
         setActiveLogos([]);
       }, 2000);
