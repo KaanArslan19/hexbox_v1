@@ -54,7 +54,7 @@ export default function About() {
       image: "/images/about/launch.png",
       header: "Launch Your Crowdfunding ",
       description:
-        "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus,pariatur magnam tempore veniam dolores incidunt recusandae voluptatem.",
+        "Ready to start raising funds? Hexbox offers a streamlined, secure platform for your crowdfunding needs for businesses and investors. Let’s turn your ideas into reality!",
     },
   ];
   return (
