@@ -15,6 +15,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       );
     }
 
+    console.log("turnstile secret key: ", process.env.TURNSTILE_SECRET_KEY);
+
     const campaignEntries = Object.fromEntries(formData.entries());
 
     const token = campaignEntries["cf-turnstile-response"];

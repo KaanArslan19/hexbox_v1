@@ -146,10 +146,10 @@ export default function WaitListForm(props: Props) {
     try {
       console.log(values);
       console.log("site key: ", process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
-      if (turnstileStatus !== "success") {
-        console.log("no token: ", values["cf-turnstile-response"]);
-        return;
-      }
+      // if (turnstileStatus !== "success") {
+      //   console.log("no token: ", values["cf-turnstile-response"]);
+      //   return;
+      // }
       const token = values["cf-turnstile-response"];
       await onSubmit(token, projectData);
     } catch (error) {
@@ -330,22 +330,26 @@ export default function WaitListForm(props: Props) {
                   refreshExpired="auto"
                   sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
                   onError={() => {
+                    console.error("turnstile error");
                     setTurnstileStatus("error");
                     setTurnstileError(
                       "Security check failed. Please try again."
                     );
                   }}
                   onExpire={() => {
+                    console.log("turnstile expired");
                     setTurnstileStatus("expired");
                     setTurnstileError(
                       "Security check expired. Please verify again."
                     );
                   }}
                   onLoad={() => {
+                    console.log("turnstile loaded");
                     setTurnstileStatus("required");
                     setTurnstileError(null);
                   }}
                   onVerify={(token) => {
+                    console.log("turnstile verified");
                     setFieldValue("cf-turnstile-response", token);
                     setTurnstileStatus("success");
                     setTurnstileError(null);
