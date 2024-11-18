@@ -153,11 +153,10 @@ export default function WaitListForm(props: Props) {
     };
     try {
       console.log(values);
-      console.log("site key: ", process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
-      // if (turnstileStatus !== "success") {
-      //   console.log("no token: ", values["cf-turnstile-response"]);
-      //   return;
-      // }
+      if (turnstileStatus !== "success") {
+        console.log("no token: ", turnstileToken);
+        return;
+      }
       const token = turnstileToken; //values["cf-turnstile-response"];
       await onSubmit(token as string, projectData);
     } catch (error) {
@@ -166,24 +165,6 @@ export default function WaitListForm(props: Props) {
     }
   };
 
-  // useEffect(() => {
-  //   if (currentStep === 2) {
-  //     // Force turnstile to render
-  //     setTimeout(() => {
-  //       const turnstileFrame = document.querySelector('iframe[src*="challenges.cloudflare.com"]');
-  //       if (!turnstileFrame) {
-  //         console.log('No Turnstile iframe found, attempting to reload');
-  //         // Force a re-render of the component
-  //         setTurnstileStatus(prev => {
-  //           console.log('Forcing Turnstile reload');
-  //           return 'required';
-  //         });
-  //       } else {
-  //         console.log('Turnstile iframe found');
-  //       }
-  //     }, 1000); // Check after a second to allow for initial render
-  //   }
-  // }, [currentStep]);
   useEffect(() => {
     // Define the callback function that Turnstile will call
     window.onTurnstileSuccess = (token: string) => {
@@ -368,45 +349,11 @@ export default function WaitListForm(props: Props) {
                 <div
                   className="cf-turnstile"
                   data-sitekey={
-                    //"1x00000000000000000000AA"
-                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+                    process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "1x00000000000000000000AA" : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
                 }
                   data-callback="onTurnstileSuccess"
-                  data-mode="testing"
                 ></div>
-                {/* <Turnstile
-                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string}
-                  retry="auto"
-                  refreshExpired="auto"
-                  appearance="always" // Force visibility
-                  size="normal"
-                  //sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
-                  onError={() => {
-                    console.error("turnstile error");
-                    setTurnstileStatus("error");
-                    setTurnstileError(
-                      "Security check failed. Please try again."
-                    );
-                  }}
-                  onExpire={() => {
-                    console.log("turnstile expired");
-                    setTurnstileStatus("expired");
-                    setTurnstileError(
-                      "Security check expired. Please verify again."
-                    );
-                  }}
-                  onLoad={() => {
-                    console.log("turnstile loaded");
-                    setTurnstileStatus("required");
-                    setTurnstileError(null);
-                  }}
-                  onVerify={(token) => {
-                    console.log("turnstile verified");
-                    setFieldValue("cf-turnstile-response", token);
-                    setTurnstileStatus("success");
-                    setTurnstileError(null);
-                  }}
-                /> */}
+
               </div>
             </div>
           )}
