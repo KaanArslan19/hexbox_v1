@@ -5,6 +5,7 @@ import { Turnstile } from "next-turnstile";
 import Script from "next/dist/client/script";
 import { useRouter } from "next/navigation";
 import React from "react";
+import Cookies from "js-cookie";
 
 export default function WaitListPage() {
   const router = useRouter();
@@ -25,10 +26,13 @@ export default function WaitListPage() {
       if (values.telegram) formData.append("telegram", values.telegram);
       if (values.linkedIn) formData.append("linkedIn", values.linkedIn);
       if (values.website) formData.append("website", values.website);
-      formData.append("predictedFundAmount", values.predictedFundAmount.toString());
+      formData.append(
+        "predictedFundAmount",
+        values.predictedFundAmount.toString()
+      );
       formData.append("solanaWalletAddress", values.solanaWalletAddress);
       formData.append("cf-turnstile-response", token);
-      
+
       const response = await fetch("/api/joinWaitlist", {
         method: "POST",
         body: formData,
@@ -37,7 +41,12 @@ export default function WaitListPage() {
       if (!response.ok) {
         throw new Error("Failed to join waitlist");
       }
-      router.push("/");
+      Cookies.set("formSubmitted", "true", {
+        path: "/",
+        sameSite: "strict",
+        expires: 1 / 48,
+      });
+      router.push("/thank-you?formSubmitted=true");
     } catch (error) {
       console.error("Error joining waitlist:", error);
     }
@@ -48,7 +57,7 @@ export default function WaitListPage() {
       <WaitListForm
         onSubmit={(token: string, values: WaitListCampaignInfo) =>
           handleCreateWaitListCampaign(token, values)
-        } 
+        }
       />
     </div>
   );

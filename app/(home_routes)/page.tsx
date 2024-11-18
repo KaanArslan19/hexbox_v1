@@ -24,6 +24,11 @@ export default async function Home() {
       <div className="h-[80vh] flex justify-center items-center">
         <WaitListBanner />
       </div>
+      <div className="text-center text-gray-300">
+        <a href="https://storyset.com/education">
+          Education illustrations by Storyset
+        </a>
+      </div>
     </main>
   );
 }

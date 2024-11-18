@@ -73,6 +73,7 @@ export interface WaitListCampaignInfo {
   mail: string;
   description: string;
   location: string;
+  twitter?: string;
   discord?: string;
   telegram?: string;
   website?: string;

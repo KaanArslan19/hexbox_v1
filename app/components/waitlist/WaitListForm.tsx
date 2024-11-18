@@ -58,6 +58,7 @@ const initialValues = {
   location: "",
   discord: "",
   telegram: "",
+  twitter: "",
   website: "",
   linkedIn: "",
   predictedFundAmount: 0,
@@ -95,6 +96,8 @@ const ReviewSection = ({ values }: { values: typeof initialValues }) => {
     {
       title: "Social Links",
       fields: [
+        { label: "Website", value: values.discord || "Not provided" },
+        { label: "Twitter", value: values.discord || "Not provided" },
         { label: "Discord", value: values.discord || "Not provided" },
         { label: "Telegram", value: values.telegram || "Not provided" },
         { label: "LinkedIn", value: values.linkedIn || "Not provided" },
@@ -135,7 +138,7 @@ export default function WaitListForm(props: Props) {
   >("required");
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-  
+
   const handleSubmit = async (values: typeof initialValues) => {
     setIsPending(true);
     const projectData: WaitListCampaignInfo = {
@@ -145,9 +148,10 @@ export default function WaitListForm(props: Props) {
       description: values.description,
       location: values.location,
       discord: values.discord,
+      twitter: values.twitter,
+      website: values.website,
       telegram: values.telegram,
       linkedIn: values.linkedIn,
-      website: values.website,
       predictedFundAmount: values.predictedFundAmount,
       solanaWalletAddress: values.solanaWalletAddress,
     };
@@ -155,7 +159,7 @@ export default function WaitListForm(props: Props) {
       console.log(values);
       if (turnstileStatus !== "success") {
         console.log("no token: ", turnstileToken);
-        setIsPending(false)
+        setIsPending(false);
         return;
       }
       const token = turnstileToken; //values["cf-turnstile-response"];
@@ -174,7 +178,6 @@ export default function WaitListForm(props: Props) {
       setTurnstileStatus("success");
     };
   }, []); // Empty dependency array since we only need to define this once
-
 
   return (
     <Formik
@@ -285,20 +288,29 @@ export default function WaitListForm(props: Props) {
                 <h3 className="text-xl mr-2">Social Links</h3>
                 <p>(optional)</p>
               </div>
-
+              <Field
+                name="website"
+                placeholder="Website URL"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
+              />
               <Field
                 name="discord"
-                placeholder="Discord Address"
+                placeholder="Discord URL"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
+              />
+              <Field
+                name="twitter"
+                placeholder="Twitter URL"
                 className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <Field
                 name="telegram"
-                placeholder="Telegram Address"
+                placeholder="Telegram URL"
                 className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <Field
                 name="linkedIn"
-                placeholder="LinkedIn Address"
+                placeholder="LinkedIn URL"
                 className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
 
@@ -350,11 +362,12 @@ export default function WaitListForm(props: Props) {
                 <div
                   className="cf-turnstile"
                   data-sitekey={
-                    process.env.NEXT_PUBLIC_NODE_ENV === "development" ? "1x00000000000000000000AA" : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
-                }
+                    process.env.NEXT_PUBLIC_NODE_ENV === "development"
+                      ? "1x00000000000000000000AA"
+                      : process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+                  }
                   data-callback="onTurnstileSuccess"
                 ></div>
-
               </div>
             </div>
           )}
