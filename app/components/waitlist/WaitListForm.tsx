@@ -155,6 +155,7 @@ export default function WaitListForm(props: Props) {
       console.log(values);
       if (turnstileStatus !== "success") {
         console.log("no token: ", turnstileToken);
+        setIsPending(false)
         return;
       }
       const token = turnstileToken; //values["cf-turnstile-response"];
