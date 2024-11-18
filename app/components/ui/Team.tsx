@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { LuTwitter, LuLinkedin } from "react-icons/lu";
-import { TeamDetails } from "../utils/teamDetails";
+import { TeamDetails } from "../../utils/teamDetails";
 
 const Team = () => {
   return (

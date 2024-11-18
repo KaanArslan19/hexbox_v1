@@ -11,7 +11,8 @@ const steps = [
   { title: "Project Details" },
   { title: "Review" },
 ];
-const FILE_SIZE_LIMIT = 1024 * 1024; // 1MB in bytes
+
+const FILE_SIZE_LIMIT = 1024 * 1024;
 const fileSizeValidator = Yup.mixed().test(
   "fileSize",
   "File size must be less than 1MB",
@@ -22,6 +23,7 @@ const fileSizeValidator = Yup.mixed().test(
     return true;
   }
 );
+
 const validationSchema = [
   Yup.object({
     name: Yup.string().required("Name is required"),
@@ -39,9 +41,6 @@ const validationSchema = [
       .min(0.0000001, "Fund amount must be greater than 0"),
     solanaWalletAddress: Yup.string().required("Wallet address is required"),
   }),
-  // Yup.object({
-  //   hexboxAddress: Yup.string().required("Hexbox address is required"),
-  // }),
 ];
 
 const initialValues = {
@@ -64,6 +63,59 @@ interface Props {
   onImageRemove?(source: string): void;
 }
 
+const ReviewSection = ({ values }: { values: typeof initialValues }) => {
+  const sections = [
+    {
+      title: "Personal Information",
+      fields: [
+        { label: "Name", value: values.name },
+        { label: "Surname", value: values.surname },
+        { label: "Email", value: values.mail },
+      ],
+    },
+    {
+      title: "Project Details",
+      fields: [
+        { label: "Description", value: values.description },
+        { label: "Location", value: values.location },
+        {
+          label: "Predicted Fund Amount",
+          value: `$${Number(values.predictedFundAmount).toLocaleString()}`,
+        },
+        { label: "Solana Wallet Address", value: values.solanaWalletAddress },
+      ],
+    },
+    {
+      title: "Social Links",
+      fields: [
+        { label: "Discord", value: values.discord || "Not provided" },
+        { label: "Telegram", value: values.telegram || "Not provided" },
+        { label: "LinkedIn", value: values.linkedIn || "Not provided" },
+      ],
+    },
+  ];
+
+  return (
+    <div className="space-y-6">
+      {sections.map((section) => (
+        <div key={section.title} className="bg-gray-50 p-4 rounded-lg">
+          <h3 className="text-xl font-medium mb-4">{section.title}</h3>
+          <div className="space-y-3">
+            {section.fields.map((field) => (
+              <div key={field.label} className="flex flex-col">
+                <span className="text-sm text-gray-600">{field.label}</span>
+                <span className="font-medium break-words">
+                  {field.value || "Not provided"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export default function WaitListForm(props: Props) {
   const { onSubmit, onImageRemove } = props;
   const [isPending, setIsPending] = useState(false);
@@ -84,7 +136,6 @@ export default function WaitListForm(props: Props) {
       mail: values.mail,
       description: values.description,
       location: values.location,
-
       discord: values.discord,
       telegram: values.telegram,
       linkedIn: values.linkedIn,
@@ -113,12 +164,12 @@ export default function WaitListForm(props: Props) {
       validationSchema={validationSchema[currentStep]}
       onSubmit={handleSubmit}
     >
-      {({ validateForm, setFieldValue, submitForm }) => (
+      {({ validateForm, setFieldValue, submitForm, values }) => (
         <form
           onSubmit={(e) => e.preventDefault()}
           className="p-6 max-w-2xl mx-auto"
         >
-          <h1 className="text-3xl text-center mb-4 ">Join Waitlist</h1>{" "}
+          <h1 className="text-3xl text-center mb-4">Join Waitlist</h1>
           <p className="text-md mb-8 font-thin text-center">
             Fill out this form to join waitlist.
           </p>
@@ -149,34 +200,34 @@ export default function WaitListForm(props: Props) {
                 name="name"
                 type="text"
                 placeholder="Name"
-                className="block w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none  focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
                 name="name"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               <h3 className="text-xl mb-2">Surname</h3>
               <Field
                 name="surname"
                 placeholder="Surname"
-                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
                 name="surname"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               <h3 className="text-xl mb-2">Email</h3>
               <Field
                 name="mail"
                 placeholder="Mail"
-                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
                 name="mail"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
             </div>
           )}
@@ -185,7 +236,7 @@ export default function WaitListForm(props: Props) {
               <h2 className="text-2xl mb-2">Project Details</h2>
               <p className="text-md mb-8 font-thin">
                 Describe your project, its objectives and the amount of funding
-                you're seeking.
+                you`re seeking.
               </p>
               <h3 className="text-xl mb-2">Project Description</h3>
               <Field
@@ -197,20 +248,22 @@ export default function WaitListForm(props: Props) {
               <ErrorMessage
                 name="description"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
-              <h3 className="text-xl mb-2">Project Location (City & Country)</h3>
+              <h3 className="text-xl mb-2">
+                Project Location (City & Country)
+              </h3>
               <Field
                 name="location"
                 placeholder="Location"
-                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
                 name="location"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
-              <div className="flex  items-center mb-2 ">
+              <div className="flex items-center mb-2">
                 <h3 className="text-xl mr-2">Social Links</h3>
                 <p>(optional)</p>
               </div>
@@ -218,21 +271,20 @@ export default function WaitListForm(props: Props) {
               <Field
                 name="discord"
                 placeholder="Discord Address"
-                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <Field
                 name="telegram"
                 placeholder="Telegram Address"
-                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
               <Field
                 name="linkedIn"
                 placeholder="LinkedIn Address"
-                className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
+                className="block w-full p-2 border border-gray-300 rounded mb-8 focus:outline-none focus:border-blueColor"
               />
 
               <h3 className="text-xl mb-2">Desired Funding Amount ($)</h3>
-
               <Field
                 name="predictedFundAmount"
                 type="text"
@@ -243,10 +295,10 @@ export default function WaitListForm(props: Props) {
               <ErrorMessage
                 name="predictedFundAmount"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
 
-              <h3 className="text-xl mb-2">Your Solana wallet address</h3>
+              <h3 className="text-xl mb-2">Your Your Solana wallet address</h3>
               <Field
                 name="solanaWalletAddress"
                 type="text"
@@ -257,7 +309,7 @@ export default function WaitListForm(props: Props) {
               <ErrorMessage
                 name="solanaWalletAddress"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
             </div>
           )}
@@ -270,31 +322,36 @@ export default function WaitListForm(props: Props) {
                 cannot be changed. Ensure accuracy before completing your
                 submission.
               </p>
-              <Turnstile
-                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string}
-                retry="auto"
-                refreshExpired="auto"
-                sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
-                onError={() => {
-                  setTurnstileStatus("error");
-                  setTurnstileError("Security check failed. Please try again.");
-                }}
-                onExpire={() => {
-                  setTurnstileStatus("expired");
-                  setTurnstileError(
-                    "Security check expired. Please verify again."
-                  );
-                }}
-                onLoad={() => {
-                  setTurnstileStatus("required");
-                  setTurnstileError(null);
-                }}
-                onVerify={(token) => {
-                  setFieldValue("cf-turnstile-response", token);
-                  setTurnstileStatus("success");
-                  setTurnstileError(null);
-                }}
-              />
+              <ReviewSection values={values} />
+              <div className="mt-8">
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string}
+                  retry="auto"
+                  refreshExpired="auto"
+                  sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
+                  onError={() => {
+                    setTurnstileStatus("error");
+                    setTurnstileError(
+                      "Security check failed. Please try again."
+                    );
+                  }}
+                  onExpire={() => {
+                    setTurnstileStatus("expired");
+                    setTurnstileError(
+                      "Security check expired. Please verify again."
+                    );
+                  }}
+                  onLoad={() => {
+                    setTurnstileStatus("required");
+                    setTurnstileError(null);
+                  }}
+                  onVerify={(token) => {
+                    setFieldValue("cf-turnstile-response", token);
+                    setTurnstileStatus("success");
+                    setTurnstileError(null);
+                  }}
+                />
+              </div>
             </div>
           )}
           <div className="flex justify-between mt-6">
@@ -303,7 +360,9 @@ export default function WaitListForm(props: Props) {
               onClick={() => setCurrentStep((prev) => prev - 1)}
               disabled={currentStep === 0}
               className={`px-4 py-2 rounded ${
-                currentStep === 0 ? "bg-gray-300" : "bg-blueColor text-white"
+                currentStep === 0
+                  ? "bg-lightBlueColor"
+                  : "bg-blueColor text-white"
               }`}
             >
               Previous

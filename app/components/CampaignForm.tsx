@@ -142,7 +142,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="title"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               <h3 className="text-xl mb-2">Projects One Liner</h3>
               <Field
@@ -153,7 +153,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="oneLiner"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
 
               <h3 className="text-xl mb-2">Logo</h3>
@@ -182,12 +182,12 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="logo"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               {/* <ErrorMessage
                 name="backgroundImage"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               /> */}
             </div>
           )}
@@ -211,7 +211,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="description"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               <h3 className="text-xl mb-2">Projects Location</h3>
               <Field
@@ -222,7 +222,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="location"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               <h3 className="text-xl mb-2">Projects Deadline</h3>
 
@@ -235,7 +235,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="deadline"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
               <h3 className="text-xl mb-2">Fund Amount</h3>
 
@@ -249,7 +249,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="fundAmount"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
 
               <h3 className="text-xl mb-2">Total token supply</h3>
@@ -290,7 +290,7 @@ export default function CampaignForm(props: Props) {
               <ErrorMessage
                 name="hexboxAddress"
                 component="div"
-                className="text-red-500 mb-2"
+                className="text-redColor mb-2"
               />
             </div>
           )}

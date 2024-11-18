@@ -1,5 +1,5 @@
 import About from "@/app/components/About";
-import Team from "@/app/components/Team";
+import Team from "@/app/components/ui/Team";
 import OurStory from "@/app/components/ui/OurStory";
 import React from "react";
 
