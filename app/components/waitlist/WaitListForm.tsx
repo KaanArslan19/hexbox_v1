@@ -5,6 +5,13 @@ import * as Yup from "yup";
 import { Steps } from "antd";
 import { WaitListCampaignInfo } from "@/app/types";
 import { Turnstile } from "next-turnstile";
+import Script from "next/dist/client/script";
+
+declare global {
+  interface Window {
+    onTurnstileSuccess: (token: string) => void;
+  }
+}
 
 const steps = [
   { title: "Introduction" },
@@ -127,7 +134,8 @@ export default function WaitListForm(props: Props) {
     "success" | "error" | "expired" | "required"
   >("required");
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
-
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  
   const handleSubmit = async (values: typeof initialValues) => {
     setIsPending(true);
     const projectData: WaitListCampaignInfo = {
@@ -150,32 +158,41 @@ export default function WaitListForm(props: Props) {
       //   console.log("no token: ", values["cf-turnstile-response"]);
       //   return;
       // }
-      const token = values["cf-turnstile-response"];
-      await onSubmit(token, projectData);
+      const token = turnstileToken; //values["cf-turnstile-response"];
+      await onSubmit(token as string, projectData);
     } catch (error) {
       console.error(error);
       setIsPending(false);
     }
   };
 
+  // useEffect(() => {
+  //   if (currentStep === 2) {
+  //     // Force turnstile to render
+  //     setTimeout(() => {
+  //       const turnstileFrame = document.querySelector('iframe[src*="challenges.cloudflare.com"]');
+  //       if (!turnstileFrame) {
+  //         console.log('No Turnstile iframe found, attempting to reload');
+  //         // Force a re-render of the component
+  //         setTurnstileStatus(prev => {
+  //           console.log('Forcing Turnstile reload');
+  //           return 'required';
+  //         });
+  //       } else {
+  //         console.log('Turnstile iframe found');
+  //       }
+  //     }, 1000); // Check after a second to allow for initial render
+  //   }
+  // }, [currentStep]);
   useEffect(() => {
-    if (currentStep === 2) {
-      // Force turnstile to render
-      setTimeout(() => {
-        const turnstileFrame = document.querySelector('iframe[src*="challenges.cloudflare.com"]');
-        if (!turnstileFrame) {
-          console.log('No Turnstile iframe found, attempting to reload');
-          // Force a re-render of the component
-          setTurnstileStatus(prev => {
-            console.log('Forcing Turnstile reload');
-            return 'required';
-          });
-        } else {
-          console.log('Turnstile iframe found');
-        }
-      }, 1000); // Check after a second to allow for initial render
-    }
-  }, [currentStep]);
+    // Define the callback function that Turnstile will call
+    window.onTurnstileSuccess = (token: string) => {
+      console.log("Turnstile token:", token);
+      setTurnstileToken(token);
+      setTurnstileStatus("success");
+    };
+  }, []); // Empty dependency array since we only need to define this once
+
 
   return (
     <Formik
@@ -343,7 +360,21 @@ export default function WaitListForm(props: Props) {
               </p>
               <ReviewSection values={values} />
               <div className="mt-8">
-                <Turnstile
+                <Script
+                  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                  async
+                  defer
+                ></Script>
+                <div
+                  className="cf-turnstile"
+                  data-sitekey={
+                    //"1x00000000000000000000AA"
+                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+                }
+                  data-callback="onTurnstileSuccess"
+                  data-mode="testing"
+                ></div>
+                {/* <Turnstile
                   siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string}
                   retry="auto"
                   refreshExpired="auto"
@@ -375,7 +406,7 @@ export default function WaitListForm(props: Props) {
                     setTurnstileStatus("success");
                     setTurnstileError(null);
                   }}
-                />
+                /> */}
               </div>
             </div>
           )}

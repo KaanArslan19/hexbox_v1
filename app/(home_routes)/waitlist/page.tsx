@@ -45,18 +45,6 @@ export default function WaitListPage() {
 
   return (
     <div className="mt-10 xl:mt-20">
-            <Script
-                src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-                async
-                defer
-            ></Script>
-            <div
-                className="cf-turnstile"
-                data-sitekey={
-                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
-                }
-        data-callback="javascriptCallback"
-      ></div>
       <WaitListForm
         onSubmit={(token: string, values: WaitListCampaignInfo) =>
           handleCreateWaitListCampaign(token, values)
