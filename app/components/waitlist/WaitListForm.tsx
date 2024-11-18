@@ -7,8 +7,8 @@ import { WaitListCampaignInfo } from "@/app/types";
 import { Turnstile } from "next-turnstile";
 
 const steps = [
-  { title: "Personal Info" },
-  { title: "Campaign Details" },
+  { title: "Introduction" },
+  { title: "Project Details" },
   { title: "Review" },
 ];
 const FILE_SIZE_LIMIT = 1024 * 1024; // 1MB in bytes
@@ -94,7 +94,9 @@ export default function WaitListForm(props: Props) {
     };
     try {
       console.log(values);
+      console.log("site key: ", process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
       if (turnstileStatus !== "success") {
+        console.log("no token: ", values["cf-turnstile-response"]);
         return;
       }
       const token = values["cf-turnstile-response"];
@@ -138,13 +140,11 @@ export default function WaitListForm(props: Props) {
           </div>
           {currentStep === 0 && (
             <div>
-              <h2 className="text-2xl mb-2">Personal Info</h2>
+              <h2 className="text-2xl mb-2">Introduction</h2>
               <p className="text-md mb-8 font-thin">
-                Enter your project`s details. Only the sections marked as
-                optional can be changed after deployment; all other information
-                will be fixed once submitted.
+                Introduce yourself and your project.
               </p>
-              <h3 className="text-xl mb-2">Name</h3>
+              <h3 className="text-xl mb-2">First Name</h3>
               <Field
                 name="name"
                 type="text"
@@ -167,7 +167,7 @@ export default function WaitListForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <h3 className="text-xl mb-2">Mail</h3>
+              <h3 className="text-xl mb-2">Email</h3>
               <Field
                 name="mail"
                 placeholder="Mail"
@@ -184,12 +184,10 @@ export default function WaitListForm(props: Props) {
             <div>
               <h2 className="text-2xl mb-2">Project Details</h2>
               <p className="text-md mb-8 font-thin">
-                Enter the desired fund amount for your campaign. This is the
-                total funding goal you`d like to reach to support your project`s
-                objectives. Ensure the amount accurately reflects the resources
-                needed to bring your project to life.
+                Describe your project, its objectives and the amount of funding
+                you're seeking.
               </p>
-              <h3 className="text-xl mb-2">Project`s Description</h3>
+              <h3 className="text-xl mb-2">Project Description</h3>
               <Field
                 as="textarea"
                 name="description"
@@ -201,7 +199,7 @@ export default function WaitListForm(props: Props) {
                 component="div"
                 className="text-red-500 mb-2"
               />
-              <h3 className="text-xl mb-2">Project`s Location</h3>
+              <h3 className="text-xl mb-2">Project Location (City & Country)</h3>
               <Field
                 name="location"
                 placeholder="Location"
@@ -233,12 +231,12 @@ export default function WaitListForm(props: Props) {
                 className="block w-full p-2 border border-gray-300 rounded  mb-8 focus:outline-none focus:border-blueColor"
               />
 
-              <h3 className="text-xl mb-2">Predicted Fund Amount ($)</h3>
+              <h3 className="text-xl mb-2">Desired Funding Amount ($)</h3>
 
               <Field
                 name="predictedFundAmount"
                 type="text"
-                placeholder="Predicted Fund Amount"
+                placeholder="Desired Funding Amount"
                 className="block w-full p-2 border border-gray-300 focus:border-blueColor rounded mb-4 focus:outline-none"
                 min="0"
               />
@@ -248,7 +246,7 @@ export default function WaitListForm(props: Props) {
                 className="text-red-500 mb-2"
               />
 
-              <h3 className="text-xl mb-2">Solana Wallet Address</h3>
+              <h3 className="text-xl mb-2">Your Solana wallet address</h3>
               <Field
                 name="solanaWalletAddress"
                 type="text"
