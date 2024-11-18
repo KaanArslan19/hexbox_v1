@@ -6,7 +6,7 @@ import Script from "next/dist/client/script";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default async function WaitListPage() {
+export default function WaitListPage() {
   const router = useRouter();
 
   const handleCreateWaitListCampaign = async (
