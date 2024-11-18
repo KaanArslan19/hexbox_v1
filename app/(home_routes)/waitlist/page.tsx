@@ -1,10 +1,12 @@
 "use client";
 import WaitListForm from "@/app/components/waitlist/WaitListForm";
 import { WaitListCampaignInfo } from "@/app/types";
+import { Turnstile } from "next-turnstile";
+import Script from "next/dist/client/script";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function WaitListPage() {
+export default async function WaitListPage() {
   const router = useRouter();
 
   const handleCreateWaitListCampaign = async (
@@ -43,8 +45,20 @@ export default function WaitListPage() {
 
   return (
     <div className="mt-10 xl:mt-20">
-      <WaitListForm 
-        onSubmit={(token: string, values: WaitListCampaignInfo) => 
+            <Script
+                src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                async
+                defer
+            ></Script>
+            <div
+                className="cf-turnstile"
+                data-sitekey={
+                    process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+                }
+        data-callback="javascriptCallback"
+      ></div>
+      <WaitListForm
+        onSubmit={(token: string, values: WaitListCampaignInfo) =>
           handleCreateWaitListCampaign(token, values)
         } 
       />

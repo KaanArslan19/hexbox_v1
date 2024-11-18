@@ -349,7 +349,7 @@ export default function WaitListForm(props: Props) {
                   refreshExpired="auto"
                   appearance="always" // Force visibility
                   size="normal"
-                  sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
+                  //sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
                   onError={() => {
                     console.error("turnstile error");
                     setTurnstileStatus("error");
