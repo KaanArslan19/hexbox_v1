@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Steps } from "antd";
@@ -157,6 +157,25 @@ export default function WaitListForm(props: Props) {
       setIsPending(false);
     }
   };
+
+  useEffect(() => {
+    if (currentStep === 2) {
+      // Force turnstile to render
+      setTimeout(() => {
+        const turnstileFrame = document.querySelector('iframe[src*="challenges.cloudflare.com"]');
+        if (!turnstileFrame) {
+          console.log('No Turnstile iframe found, attempting to reload');
+          // Force a re-render of the component
+          setTurnstileStatus(prev => {
+            console.log('Forcing Turnstile reload');
+            return 'required';
+          });
+        } else {
+          console.log('Turnstile iframe found');
+        }
+      }, 1000); // Check after a second to allow for initial render
+    }
+  }, [currentStep]);
 
   return (
     <Formik
@@ -328,6 +347,8 @@ export default function WaitListForm(props: Props) {
                   siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string}
                   retry="auto"
                   refreshExpired="auto"
+                  appearance="always" // Force visibility
+                  size="normal"
                   sandbox={process.env.NEXT_PUBLIC_NODE_ENV === "development"}
                   onError={() => {
                     console.error("turnstile error");
