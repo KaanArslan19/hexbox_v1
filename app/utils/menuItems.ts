@@ -36,11 +36,11 @@ export const MobileMenuItems: MenuItem[] = [
     label: "About",
   },
   {
-    href: "/contact",
+    href: "https://discord.gg/7XudEQ56",
     label: "Contact",
   },
   {
-    href: "/discord",
+    href: "https://discord.gg/7XudEQ56",
     label: "Join Our Discord",
   },
   {
@@ -48,7 +48,7 @@ export const MobileMenuItems: MenuItem[] = [
     label: "Docs",
   },
   {
-    href: "/faq",
+    href: "https://hexbox.gitbook.io/hexbox/faq/what-is-hexbox",
     label: "F.A.Q.",
   },
 ];
@@ -82,7 +82,7 @@ export const WaitListNavItems: MenuItem[] = [
     label: "About",
   },
   {
-    href: "/faq",
+    href: "https://hexbox.gitbook.io/hexbox/faq/what-is-hexbox",
     label: "F.A.Q.",
   },
 ];
