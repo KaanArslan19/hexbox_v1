@@ -259,11 +259,11 @@ export default function WaitListForm(props: Props) {
                 Describe your project, its objectives and the amount of funding
                 you`re seeking.
               </p>
-              <h3 className="text-xl mb-2">Project Description</h3>
+              <h3 className="text-xl mb-2">Project Name & Description</h3>
               <Field
                 as="textarea"
                 name="description"
-                placeholder="Description"
+                placeholder="Project Name & Description"
                 className="block w-full p-2 border border-gray-300 rounded h-32 mb-8 focus:outline-none focus:border-blueColor"
               />
               <ErrorMessage
