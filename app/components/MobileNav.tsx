@@ -18,7 +18,7 @@ export function MobileNav({ open, menuItems }: Props) {
         <ul className="space-y-4 border-y-2 border-lightBlueColor py-4 ">
           {menuItems.map(({ href, label }) => (
             <li key={href} className="text-lg mx-2 ">
-              <Link href={href}>
+              <Link href={href} target="_blank">
                 <span className="text-black hover:text-orangeColor">
                   {label}
                 </span>
@@ -28,7 +28,7 @@ export function MobileNav({ open, menuItems }: Props) {
         </ul>
         <div className=" mt-2 text-center ">
           <Link className="  px-4 py-1 " href="/">
-              <SignInButton />
+            <SignInButton />
           </Link>
         </div>
       </Collapse>

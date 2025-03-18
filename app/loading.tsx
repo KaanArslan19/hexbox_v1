@@ -1,22 +1,20 @@
 import React from "react";
-import GridView from "./components/ui/GridView";
 
 export default function Loading() {
-  const dummyData = Array(12).fill("");
-
   return (
-    <div className="max-w-screen-xl mx-auto xl:p-0 p-4">
-      <div className=" space-y-6 animate-pulse">
-        <div className="mt-2 h-[80px] bg-gray-300"></div>
-        {/*   <GridView>
-               {dummyData.map((_, index) => {
-            return (
-              <div key={index} className="w-full aspect-square bg-gray-300" />
-            );
-          })} 
+    <div className="max-w-screen-[80vh] mx-auto p-4">
+      <div className="animate-pulse">
+        <div className="h-[64px] bg-gray-300 rounded-lg"></div>
 
-        </GridView>*/}
-        <div className="w-full h-[400px] bg-gray-300" />
+        <div className="h-[80vh] flex justify-center items-center">
+          <div className="w-full h-[300px] bg-gray-300 rounded-lg" />
+        </div>
+
+        <div className="text-center text-gray-300">
+          <a href="https://storyset.com/education">
+            Education illustrations by Storyset
+          </a>
+        </div>
       </div>
     </div>
   );

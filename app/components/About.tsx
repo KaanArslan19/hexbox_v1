@@ -59,7 +59,7 @@ export default function About() {
   ];
   return (
     <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl xl:text-6xl capitalize text-center mb-4 tracking-tight">
+      <h1 className="text-3xl md:text-5xl capitalize text-center mb-4 font-customFont_bold text-blueColor tracking-tight">
         Involve in Hexbox world <br className="hidden sm:inline" />
         just in a Minute
       </h1>
@@ -82,7 +82,7 @@ export default function About() {
               />
             </div>
             <div className="flex-1 p-6 flex flex-col">
-              <h4 className="text-2xl font-semibold text-center mb-4">
+              <h4 className="text-2xl font-customFont_regular text-center mb-4 text-orangeColor">
                 {item.header}
               </h4>
               <div className="flex-1 overflow-y-auto">

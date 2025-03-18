@@ -42,6 +42,7 @@ export default function NavUI() {
                   <Link
                     key={href}
                     href={href}
+                    target="_blank"
                     className="outline-none text-black hover:text-blueColor"
                   >
                     <span className="text-xl">{label}</span>

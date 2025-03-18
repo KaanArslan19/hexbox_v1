@@ -35,6 +35,9 @@ export default function WaitListNavUI() {
                   <Link
                     key={href}
                     href={href}
+                    target={
+                      label.toLowerCase() !== "about" ? "_blank" : undefined
+                    }
                     className="outline-none text-black hover:text-white"
                   >
                     <span className="text-xl">{label}</span>
